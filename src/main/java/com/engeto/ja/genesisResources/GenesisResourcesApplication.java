@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 
 @SpringBootApplication
-@EntityScan("com.engeto.ja.genesisResources.model.User")
+@EntityScan("com.engeto.ja.genesisResources.model")
 public class GenesisResourcesApplication {
 
 	public static void main(String[] args) {
