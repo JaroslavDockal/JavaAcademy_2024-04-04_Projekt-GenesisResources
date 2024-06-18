@@ -1,30 +1,16 @@
-package com.engeto.ja.genesisResources.model;
+package cz.engeto.ja.genesisResources.model;
 
-import javax.persistence.Entity;
-import javax.persistence.*;
 import java.util.UUID;
 
-@Entity
 public class User {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
-    @Column(nullable = false)
     private String name;
-
-    @Column(nullable = false)
     private String surname;
-
-    @Column(nullable = false, unique = true)
     private String personID;
-
-    @Column(nullable = false, unique = true)
     private UUID uuid;
 
     // Constructors, getters and setters
-
     public User() {
         this.uuid = UUID.randomUUID();
     }
@@ -36,7 +22,13 @@ public class User {
         this.uuid = UUID.randomUUID();
     }
 
-    // Getters and setters...
+    public User(Long id, String name, String surname, String personID, UUID uuid) {
+        this.id = id;
+        this.name = name;
+        this.surname = surname;
+        this.personID = personID;
+        this.uuid = uuid;
+    }
 
     public Long getId() {
         return id;

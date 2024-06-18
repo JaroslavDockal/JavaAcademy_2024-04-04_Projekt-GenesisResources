@@ -1,13 +1,12 @@
-package com.engeto.ja.genesisResources;
+package cz.engeto.ja.genesisResources;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.domain.EntityScan;
+import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
-@EntityScan("com.engeto.ja.genesisResources.model")
+@ComponentScan(basePackages = {"cz.engeto.ja.genesisResources"})
 public class GenesisResourcesApplication {
-
 	public static void main(String[] args) {
 		SpringApplication.run(GenesisResourcesApplication.class, args);
 	}

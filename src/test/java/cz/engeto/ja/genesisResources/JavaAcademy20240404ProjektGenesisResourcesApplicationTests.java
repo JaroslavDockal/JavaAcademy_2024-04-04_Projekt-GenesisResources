@@ -1,4 +1,4 @@
-package com.engeto.ja.genesisResources;
+package cz.engeto.ja.genesisResources;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
