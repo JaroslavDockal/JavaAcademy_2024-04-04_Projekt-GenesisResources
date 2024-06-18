@@ -11,6 +11,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("api/v1/users")
+@CrossOrigin(origins = "http://localhost:63342")
 public class UserController {
 
     @Autowired
@@ -22,6 +23,7 @@ public class UserController {
         return user;
     }
 
+    //TODO api/v1/users/{ID}?detail=true -> vrátí rozšířený objekt
     @GetMapping("/{id}")
     public User getUserById(@PathVariable Long id) throws SQLException {
         return userService.getUserById(id);
@@ -32,6 +34,7 @@ public class UserController {
         return userService.getUserByUuid(uuid);
     }
 
+    //TODO api/v1/users?detail=true -> vrátí rozšířený objekt
     @GetMapping
     public List<User> getAllUsers() throws SQLException {
         return userService.getAllUsers();

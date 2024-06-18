@@ -20,6 +20,8 @@ public class UserService {
         connection = DriverManager.getConnection(CONNECTION_CONSTANT);
     }
 
+    //TODO Nějak jsem do****l id - vrací to null i když v db je...
+    //TODO Při každém zápisu musíme zkontrolovat, zda personID nebylo přiřazeno již jinému záznamu.
     public void createUser(User user) throws SQLException {
         String sql = "INSERT INTO Users (name, surname, personID, uuid) VALUES (?, ?, ?, ?)";
         try (PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
@@ -35,6 +37,7 @@ public class UserService {
         }
     }
 
+    //TODO api/v1/users/{ID}?detail=true -> vrátí rozšířený objekt
     public User getUserById(Long id) throws SQLException {
         String sql = "SELECT * FROM Users WHERE id = ?";
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
@@ -42,11 +45,11 @@ public class UserService {
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
                 return new User(
-                        resultSet.getLong("id"),
+                        //resultSet.getLong("id"),
                         resultSet.getString("name"),
                         resultSet.getString("surname"),
-                        resultSet.getString("personID"),
-                        UUID.fromString(resultSet.getString("uuid"))
+                        resultSet.getString("personID")
+                        //UUID.fromString(resultSet.getString("uuid"))
                 );
             }
         }
@@ -71,6 +74,7 @@ public class UserService {
         return null;
     }
 
+    //TODO api/v1/users?detail=true -> vrátí rozšířený objekt
     public List<User> getAllUsers() throws SQLException {
         String sql = "SELECT * FROM Users";
         List<User> allUsers = new ArrayList<>();

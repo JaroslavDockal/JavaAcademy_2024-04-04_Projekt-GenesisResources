@@ -1,0 +1,22 @@
+CREATE DATABASE genesisResources_db;
+
+USE genesisResources_db;
+
+CREATE TABLE Users(
+	id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    surname VARCHAR(255),
+    personID VARCHAR(12) UNIQUE NOT NULL,
+    uuid VARCHAR(36) UNIQUE NOT NULL
+)
+ENGINE=InnoDB
+DEFAULT CHARSET=cp1250
+COLLATE=cp1250_general_ci;
+
+
+INSERT INTO Users (name, surname, personID, uuid) VALUES
+('John', 'Doe', '123456789012', '550e8400-e29b-41d4-a716-446655440000'),
+('Jane', 'Smith', '123456789013', '550e8400-e29b-41d4-a716-446655440001'),
+('Alice', 'Johnson', '123456789014', '550e8400-e29b-41d4-a716-446655440002'),
+('Bob', 'Brown', '123456789015', '550e8400-e29b-41d4-a716-446655440003'),
+('Charlie', 'Davis', '123456789016', '550e8400-e29b-41d4-a716-446655440004');

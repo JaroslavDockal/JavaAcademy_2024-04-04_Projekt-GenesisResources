@@ -10,7 +10,6 @@ public class User {
     private String personID;
     private UUID uuid;
 
-    // Constructors, getters and setters
     public User() {
         this.uuid = UUID.randomUUID();
     }
