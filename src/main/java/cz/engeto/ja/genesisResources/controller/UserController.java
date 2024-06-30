@@ -28,17 +28,19 @@ public class UserController {
     @PostMapping("/user")
     public ResponseEntity<?> createUser(@RequestBody User user) {
         try {
-            String personID = personIdService.assignPersonId();
-            if (personID == null) {
-                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("No available personID");
+            String personID = user.getPersonID();
+
+            if (!personIdService.getPersonIds().contains(personID)) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid personID");
             }
 
-            if (personIdService.isPersonIdAlreadyAssigned(personID)) {
-                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("personID already assigned to another user");
+            if (userService.getUserByPersonId(personID) != null) {
+                return ResponseEntity.status(HttpStatus.CONFLICT).body("personID already assigned to another user");
             }
 
             user.setPersonID(personID);
             userService.createUser(user);
+            personIdService.markPersonIdAsAssigned(personID);
 
             return ResponseEntity.status(HttpStatus.CREATED).body(user);
         } catch (SQLException e) {

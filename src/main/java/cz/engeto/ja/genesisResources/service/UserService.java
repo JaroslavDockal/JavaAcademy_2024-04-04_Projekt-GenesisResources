@@ -2,9 +2,9 @@ package cz.engeto.ja.genesisResources.service;
 
 import cz.engeto.ja.genesisResources.model.User;
 import cz.engeto.ja.genesisResources.model.UserBasicInfo;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import jakarta.annotation.PostConstruct;
 import java.sql.*;
 import java.util.ArrayList;
@@ -28,7 +28,7 @@ public class UserService {
     public void createUser(User user) throws SQLException {
         System.out.println("Received request to create new user... Name: \"" + user.getName() + "\", Surname: \"" + user.getSurname() + "\", PersonID: \"" + user.getPersonID() + "\"");
 
-        if (personIdService.isPersonIdAlreadyAssigned(user.getPersonID())) {
+        if (personIdService.isPersonIdUsedByOtherUser(user.getPersonID())) {
             throw new SQLException("personID already assigned to another user");
         }
 
@@ -44,6 +44,25 @@ public class UserService {
                 user.setId(keys.getLong(1));
             }
         }
+    }
+
+    public User getUserByPersonId(String personID) throws SQLException {
+        System.out.println("Received request for user with personID: " + personID);
+        String sql = "SELECT * FROM Users WHERE personID = ?";
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1, personID);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                return new User(
+                        resultSet.getLong("id"),
+                        resultSet.getString("name"),
+                        resultSet.getString("surname"),
+                        resultSet.getString("personID"),
+                        resultSet.getString("uuid")
+                );
+            }
+        }
+        return null;
     }
 
     public User getUserById(Long id) throws SQLException {

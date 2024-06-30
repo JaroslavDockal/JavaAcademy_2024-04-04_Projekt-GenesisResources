@@ -14,7 +14,6 @@ public class User {
         this.uuid = UUID.randomUUID();
     }
 
-    // Konstruktor pro načítání uživatele z databáze (s použitím UUID z databáze)
     public User(Long id, String name, String surname, String personID, String uuidString) {
         this.id = id;
         this.name = name;
@@ -22,15 +21,6 @@ public class User {
         this.personID = personID;
         this.uuid = UUID.fromString(uuidString);
     }
-
-    // Konstruktor pro vytváření uživatele s předem známým UUID
-//    public User(Long id, String name, String surname, String personID, UUID uuid) {
-//        this.id = id;
-//        this.name = name;
-//        this.surname = surname;
-//        this.personID = personID;
-//        this.uuid = uuid;
-//    }
 
     public User(String name, String surname, String personID) {
         this.name = name;
