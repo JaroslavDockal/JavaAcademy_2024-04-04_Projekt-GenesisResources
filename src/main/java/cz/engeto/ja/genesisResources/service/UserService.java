@@ -1,9 +1,11 @@
 package cz.engeto.ja.genesisResources.service;
 
 import cz.engeto.ja.genesisResources.model.User;
+import cz.engeto.ja.genesisResources.model.UserBasicInfo;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import jakarta.annotation.PostConstruct;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,14 +17,19 @@ public class UserService {
     private static final String CONNECTION_CONSTANT = "jdbc:mysql://localhost:3306/genesisResources_db?user=root&password=Genesis-2024";
     private Connection connection;
 
+    @Autowired
+    private PersonIdService personIdService;
+
     @PostConstruct
     public void init() throws SQLException {
         connection = DriverManager.getConnection(CONNECTION_CONSTANT);
     }
 
-    //TODO Nějak jsem do****l id - vrací to null i když v db je...
-    //TODO Při každém zápisu musíme zkontrolovat, zda personID nebylo přiřazeno již jinému záznamu.
     public void createUser(User user) throws SQLException {
+        if (personIdService.getPersonIds().contains(user.getPersonID())) {
+            throw new SQLException("personID already assigned to another user");
+        }
+
         String sql = "INSERT INTO Users (name, surname, personID, uuid) VALUES (?, ?, ?, ?)";
         try (PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             statement.setString(1, user.getName());
@@ -37,7 +44,6 @@ public class UserService {
         }
     }
 
-    //TODO api/v1/users/{ID}?detail=true -> vrátí rozšířený objekt
     public User getUserById(Long id) throws SQLException {
         String sql = "SELECT * FROM Users WHERE id = ?";
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
@@ -45,13 +51,21 @@ public class UserService {
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
                 return new User(
-                        //resultSet.getLong("id"),
+                        resultSet.getLong("id"),
                         resultSet.getString("name"),
                         resultSet.getString("surname"),
-                        resultSet.getString("personID")
-                        //UUID.fromString(resultSet.getString("uuid"))
+                        resultSet.getString("personID"),
+                        UUID.fromString(resultSet.getString("uuid"))
                 );
             }
+        }
+        return null;
+    }
+
+    public UserBasicInfo getUserByIdSimple(Long id) throws SQLException {
+        User user = getUserById(id);
+        if (user != null) {
+            return UserBasicInfo.fromUser(user);
         }
         return null;
     }
@@ -74,7 +88,6 @@ public class UserService {
         return null;
     }
 
-    //TODO api/v1/users?detail=true -> vrátí rozšířený objekt
     public List<User> getAllUsers() throws SQLException {
         String sql = "SELECT * FROM Users";
         List<User> allUsers = new ArrayList<>();
@@ -89,6 +102,23 @@ public class UserService {
                         UUID.fromString(resultSet.getString("uuid"))
                 );
                 allUsers.add(user);
+            }
+        }
+        return allUsers;
+    }
+
+    public List<UserBasicInfo> getAllUsersSimple() throws SQLException {
+        String sql = "SELECT * FROM Users";
+        List<UserBasicInfo> allUsers = new ArrayList<>();
+        try (PreparedStatement statement = connection.prepareStatement(sql);
+             ResultSet resultSet = statement.executeQuery()) {
+            while (resultSet.next()) {
+                UserBasicInfo userBasicInfo = new UserBasicInfo(
+                        resultSet.getLong("id"),
+                        resultSet.getString("name"),
+                        resultSet.getString("surname")
+                );
+                allUsers.add(userBasicInfo);
             }
         }
         return allUsers;

@@ -1,8 +1,13 @@
 package cz.engeto.ja.genesisResources.controller;
 
 import cz.engeto.ja.genesisResources.model.User;
+import cz.engeto.ja.genesisResources.model.UserBasicInfo;
 import cz.engeto.ja.genesisResources.service.UserService;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.SQLException;
@@ -23,10 +28,21 @@ public class UserController {
         return user;
     }
 
-    //TODO api/v1/users/{ID}?detail=true -> vrátí rozšířený objekt
-    @GetMapping("/{id}")
-    public User getUserById(@PathVariable Long id) throws SQLException {
-        return userService.getUserById(id);
+    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> getUserById(@PathVariable Long id, @RequestParam(value = "detail", required = false, defaultValue = "false") boolean detail) throws SQLException {
+        if (detail) {
+            User user = userService.getUserById(id);
+            if (user == null) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found with id " + id);
+            }
+            return ResponseEntity.ok(user);
+        } else {
+            UserBasicInfo userBasicInfo = userService.getUserByIdSimple(id);
+            if (userBasicInfo == null) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found with id " + id);
+            }
+            return ResponseEntity.ok(userBasicInfo);
+        }
     }
 
     @GetMapping("/uuid/{uuid}")
@@ -34,10 +50,15 @@ public class UserController {
         return userService.getUserByUuid(uuid);
     }
 
-    //TODO api/v1/users?detail=true -> vrátí rozšířený objekt
     @GetMapping
-    public List<User> getAllUsers() throws SQLException {
-        return userService.getAllUsers();
+    public ResponseEntity<?> getAllUsers(@RequestParam(value = "detail", required = false, defaultValue = "false") boolean detail) throws SQLException {
+        if (detail) {
+            List<User> users = userService.getAllUsers();
+            return ResponseEntity.ok(users);
+        } else {
+            List<UserBasicInfo> users = userService.getAllUsersSimple();
+            return ResponseEntity.ok(users);
+        }
     }
 
     @PutMapping("/{uuid}")

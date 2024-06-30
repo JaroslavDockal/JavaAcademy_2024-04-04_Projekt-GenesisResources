@@ -1,12 +1,12 @@
 package cz.engeto.ja.genesisResources.service;
 
+import org.springframework.stereotype.Service;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
-import org.springframework.stereotype.Service;
 
 @Service
 public class PersonIdService {
@@ -29,7 +29,7 @@ public class PersonIdService {
                 ids.add(line.trim());
             }
         } catch (IOException e) {
-            e.printStackTrace(); // Handle this exception properly in a real application
+            e.printStackTrace();
         }
         return ids;
     }
