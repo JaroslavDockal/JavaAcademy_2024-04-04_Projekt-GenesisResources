@@ -12,17 +12,17 @@ public class UserBasicInfo {
         this.surname = surname;
     }
 
-//    public Long getId() {
-//        return id;
-//    }
-//
-//    public String getName() {
-//        return name;
-//    }
-//
-//    public String getSurname() {
-//        return surname;
-//    }
+    public Long getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getSurname() {
+        return surname;
+    }
 
     public static UserBasicInfo fromUser(User user) {
         return new UserBasicInfo(user.getId(), user.getName(), user.getSurname());
