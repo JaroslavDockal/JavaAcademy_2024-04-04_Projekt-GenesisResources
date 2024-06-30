@@ -2,14 +2,55 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>API Test</title>
+    <title>Genesis Resources</title>
     <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            margin-top: 50px;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .container {
+            display: flex;
+            align-items: flex-start;
+            gap: 00px;
+        }
+        .column {
+            display: flex;
+            flex-direction: column;
+            gap: 0px;
+            width: 400px;
+        }
+        .function-box {
+            padding: 15px;
+            border: 1px solid #ccc;
+        }
+        .function-box h2 {
+            margin-top: 0;
+        }
+        .input-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        .input-container input {
+            width: 90%;
+        }
+        .input-container button {
+            width: 50%;
+        }
         #output-box {
             border: 1px solid #000;
-            padding: 10px;
-            width: 400px;
-            height: 400px;
-            overflow-y: scroll;
+            padding: 00px;
+            width: 100%;
+            height: 850px;
+            overflow-y: auto;
         }
     </style>
     <script>
@@ -38,15 +79,15 @@
             const data = {
                 name: document.getElementById('create-name').value,
                 surname: document.getElementById('create-surname').value,
-                uuid: document.getElementById('create-uuid').value,
+                personID: document.getElementById('create-personId').value,
             };
-            await apiCall('http://localhost:8080/api/v1/users', 'POST', data);
+            await apiCall('http://localhost:8080/api/v1/user', 'POST', data);
         }
 
         async function getUserById() {
             const id = document.getElementById('get-id').value;
             const detail = document.getElementById('get-detail').checked;
-            await apiCall(`http://localhost:8080/api/v1/users/${id}?detail=${detail}`);
+            await apiCall(`http://localhost:8080/api/v1/user/${id}?detail=${detail}`);
         }
 
         async function getAllUsers() {
@@ -55,63 +96,80 @@
         }
 
         async function updateUser() {
-            const uuid = document.getElementById('update-uuid').value;
+            const id = document.getElementById('update-id').value;
             const data = {
                 name: document.getElementById('update-name').value,
                 surname: document.getElementById('update-surname').value,
             };
-            await apiCall(`http://localhost:8080/api/v1/users/${uuid}`, 'PUT', data);
+            await apiCall(`http://localhost:8080/api/v1/user/${id}`, 'PUT', data);
         }
 
         async function deleteUser() {
-            const uuid = document.getElementById('delete-uuid').value;
-            await apiCall(`http://localhost:8080/api/v1/users/${uuid}`, 'DELETE');
+            const id = document.getElementById('delete-id').value;
+            await apiCall(`http://localhost:8080/api/v1/user/${id}`, 'DELETE');
         }
     </script>
 </head>
 <body>
-<h1>API Test</h1>
+<h1 class="header">Genesis Resources - API Test Interface</h1>
 
-<section>
-    <h2>Create User</h2>
-    <input id="create-name" type="text" placeholder="Name" />
-    <input id="create-surname" type="text" placeholder="Surname" />
-    <input id="create-uuid" type="text" placeholder="UUID" />
-    <button onclick="createUser()">Create User</button>
-</section>
+<div class="container">
+    <div class="column">
+        <div class="function-box">
+            <h2>Create User</h2>
+            <div class="input-container">
+                <input id="create-name" type="text" placeholder="Name" />
+                <input id="create-surname" type="text" placeholder="Surname" />
+                <input id="create-personId" type="text" placeholder="Person ID" />
+                <button onclick="createUser()">Create User</button>
+            </div>
+        </div>
 
-<section>
-    <h2>Get User by ID</h2>
-    <input id="get-id" type="text" placeholder="ID" />
-    <label for="get-detail">Detail:</label>
-    <input id="get-detail" type="checkbox" />
-    <button onclick="getUserById()">Get User</button>
-</section>
+        <div class="function-box">
+            <h2>Update User</h2>
+            <div class="input-container">
+                <input id="update-id" type="text" placeholder="ID" />
+                <input id="update-name" type="text" placeholder="Name" />
+                <input id="update-surname" type="text" placeholder="Surname" />
+                <button onclick="updateUser()">Update User</button>
+            </div>
+        </div>
 
-<section>
-    <h2>Get All Users</h2>
-    <label for="getall-detail">Detail:</label>
-    <input id="getall-detail" type="checkbox" />
-    <button onclick="getAllUsers()">Get All Users</button>
-</section>
+        <div class="function-box">
+            <h2>Get User by ID</h2>
+            <div class="input-container">
+                <input id="get-id" type="text" placeholder="ID" />
+                <label for="get-detail">Detail:</label>
+                <input id="get-detail" type="checkbox" />
+                <button onclick="getUserById()">Get User</button>
+            </div>
+        </div>
 
-<section>
-    <h2>Update User</h2>
-    <input id="update-uuid" type="text" placeholder="UUID" />
-    <input id="update-name" type="text" placeholder="Name" />
-    <input id="update-surname" type="text" placeholder="Surname" />
-    <button onclick="updateUser()">Update User</button>
-</section>
+        <div class="function-box">
+            <h2>Get All Users</h2>
+            <div class="input-container">
+                <input id="getall-detail" type="checkbox" />
+                <label for="getall-detail" style="margin-left: 5px;">Detail:</label>
+                <button onclick="getAllUsers()">Get All Users</button>
+            </div>
+        </div>
 
-<section>
-    <h2>Delete User</h2>
-    <input id="delete-uuid" type="text" placeholder="UUID" />
-    <button onclick="deleteUser()">Delete User</button>
-</section>
+        <div class="function-box">
+            <h2>Delete User</h2>
+            <div class="input-container">
+                <input id="delete-id" type="text" placeholder="ID" />
+                <button onclick="deleteUser()">Delete User</button>
+            </div>
+        </div>
+    </div>
 
-<section>
-    <h2>Output</h2>
-    <div id="output-box"></div>
-</section>
+    <div class="column">
+        <div class="function-box">
+            <h2>Output</h2>
+            <div id="output-box"></div>
+        </div>
+    </div>
+</div>
+
 </body>
 </html>

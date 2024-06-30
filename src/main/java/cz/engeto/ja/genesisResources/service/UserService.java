@@ -4,8 +4,8 @@ import cz.engeto.ja.genesisResources.model.User;
 import cz.engeto.ja.genesisResources.model.UserBasicInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import jakarta.annotation.PostConstruct;
 
+import jakarta.annotation.PostConstruct;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +26,9 @@ public class UserService {
     }
 
     public void createUser(User user) throws SQLException {
-        if (personIdService.getPersonIds().contains(user.getPersonID())) {
+        System.out.println("Received request to create new user... Name: \"" + user.getName() + "\", Surname: \"" + user.getSurname() + "\", PersonID: \"" + user.getPersonID() + "\"");
+
+        if (personIdService.isPersonIdAlreadyAssigned(user.getPersonID())) {
             throw new SQLException("personID already assigned to another user");
         }
 
@@ -45,6 +47,7 @@ public class UserService {
     }
 
     public User getUserById(Long id) throws SQLException {
+        System.out.println("Received request for user with ID: " + id);
         String sql = "SELECT * FROM Users WHERE id = ?";
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setLong(1, id);
@@ -55,7 +58,7 @@ public class UserService {
                         resultSet.getString("name"),
                         resultSet.getString("surname"),
                         resultSet.getString("personID"),
-                        UUID.fromString(resultSet.getString("uuid"))
+                        resultSet.getString("uuid")
                 );
             }
         }
@@ -63,6 +66,7 @@ public class UserService {
     }
 
     public UserBasicInfo getUserByIdSimple(Long id) throws SQLException {
+        System.out.print("Received request for user (basic info)... ");
         User user = getUserById(id);
         if (user != null) {
             return UserBasicInfo.fromUser(user);
@@ -81,7 +85,7 @@ public class UserService {
                         resultSet.getString("name"),
                         resultSet.getString("surname"),
                         resultSet.getString("personID"),
-                        UUID.fromString(resultSet.getString("uuid"))
+                        resultSet.getString("uuid")
                 );
             }
         }
@@ -89,6 +93,7 @@ public class UserService {
     }
 
     public List<User> getAllUsers() throws SQLException {
+        System.out.println("Received request for all users (full info)...");
         String sql = "SELECT * FROM Users";
         List<User> allUsers = new ArrayList<>();
         try (PreparedStatement statement = connection.prepareStatement(sql);
@@ -99,7 +104,7 @@ public class UserService {
                         resultSet.getString("name"),
                         resultSet.getString("surname"),
                         resultSet.getString("personID"),
-                        UUID.fromString(resultSet.getString("uuid"))
+                        resultSet.getString("uuid")
                 );
                 allUsers.add(user);
             }
@@ -108,6 +113,7 @@ public class UserService {
     }
 
     public List<UserBasicInfo> getAllUsersSimple() throws SQLException {
+        System.out.println("Received request for all users (basic info)...");
         String sql = "SELECT * FROM Users";
         List<UserBasicInfo> allUsers = new ArrayList<>();
         try (PreparedStatement statement = connection.prepareStatement(sql);
@@ -125,19 +131,21 @@ public class UserService {
     }
 
     public void updateUser(User user) throws SQLException {
-        String sql = "UPDATE Users SET name = ?, surname = ? WHERE uuid = ?";
+        System.out.println("Received request to update user with ID: " + user.getId() + " to Name: \"" + user.getName() + "\", Surname: \"" + user.getSurname() + "\"");
+        String sql = "UPDATE Users SET name = ?, surname = ? WHERE id = ?";
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, user.getName());
             statement.setString(2, user.getSurname());
-            statement.setString(3, user.getUuid().toString());
+            statement.setLong(3, user.getId());
             statement.executeUpdate();
         }
     }
 
-    public void deleteUser(UUID uuid) throws SQLException {
-        String sql = "DELETE FROM Users WHERE uuid = ?";
+    public void deleteUser(Long id) throws SQLException {
+        System.out.println("Received request to delete user with ID: " + id);
+        String sql = "DELETE FROM Users WHERE id = ?";
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setString(1, uuid.toString());
+            statement.setLong(1, id);
             statement.executeUpdate();
         }
     }

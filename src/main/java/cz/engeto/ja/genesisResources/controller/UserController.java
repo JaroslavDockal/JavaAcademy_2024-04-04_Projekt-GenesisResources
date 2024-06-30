@@ -2,6 +2,7 @@ package cz.engeto.ja.genesisResources.controller;
 
 import cz.engeto.ja.genesisResources.model.User;
 import cz.engeto.ja.genesisResources.model.UserBasicInfo;
+import cz.engeto.ja.genesisResources.service.PersonIdService;
 import cz.engeto.ja.genesisResources.service.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,30 +10,43 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.sql.SQLException;
 import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("api/v1/users")
+@RequestMapping("api/v1")
 @CrossOrigin(origins = "http://localhost:63342")
 public class UserController {
 
     @Autowired
     private UserService userService;
 
-    @PostMapping
+    @Autowired
+    private PersonIdService personIdService;
+
+    @PostMapping("/user")
     public ResponseEntity<?> createUser(@RequestBody User user) {
         try {
+            String personID = personIdService.assignPersonId();
+            if (personID == null) {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("No available personID");
+            }
+
+            if (personIdService.isPersonIdAlreadyAssigned(personID)) {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("personID already assigned to another user");
+            }
+
+            user.setPersonID(personID);
             userService.createUser(user);
+
             return ResponseEntity.status(HttpStatus.CREATED).body(user);
         } catch (SQLException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
     }
 
-    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/user/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> getUserById(@PathVariable Long id, @RequestParam(value = "detail", required = false, defaultValue = "false") boolean detail) {
         try {
             if (detail) {
@@ -53,7 +67,7 @@ public class UserController {
         }
     }
 
-    @GetMapping("/uuid/{uuid}")
+    @GetMapping("/user/uuid/{uuid}")
     public ResponseEntity<?> getUserByUuid(@PathVariable UUID uuid) {
         try {
             User user = userService.getUserByUuid(uuid);
@@ -66,7 +80,7 @@ public class UserController {
         }
     }
 
-    @GetMapping
+    @GetMapping("/users")
     public ResponseEntity<?> getAllUsers(@RequestParam(value = "detail", required = false, defaultValue = "false") boolean detail) {
         try {
             if (detail) {
@@ -81,21 +95,26 @@ public class UserController {
         }
     }
 
-    @PutMapping("/{uuid}")
-    public ResponseEntity<?> updateUser(@PathVariable UUID uuid, @RequestBody User user) {
+    @PutMapping("/user/{id}")
+    public ResponseEntity<?> updateUser(@PathVariable Long id, @RequestBody User user) {
         try {
-            user.setUuid(uuid);
+            user.setId(id);
             userService.updateUser(user);
-            return ResponseEntity.ok(user);
+
+            UserBasicInfo userBasicInfo = userService.getUserByIdSimple(id);
+            if (userBasicInfo == null) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found with id " + id);
+            }
+            return ResponseEntity.ok(userBasicInfo);
         } catch (SQLException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
     }
 
-    @DeleteMapping("/{uuid}")
-    public ResponseEntity<?> deleteUser(@PathVariable UUID uuid) {
+    @DeleteMapping("/user/{id}")
+    public ResponseEntity<?> deleteUser(@PathVariable Long id) {
         try {
-            userService.deleteUser(uuid);
+            userService.deleteUser(id);
             return ResponseEntity.noContent().build();
         } catch (SQLException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());

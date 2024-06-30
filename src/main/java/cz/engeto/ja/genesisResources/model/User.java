@@ -11,53 +11,70 @@ public class User {
     private UUID uuid;
 
     public User() {
+        this.uuid = UUID.randomUUID();
     }
 
-    public User(Long id, String name, String surname, String personID, UUID uuid) {
+    // Konstruktor pro načítání uživatele z databáze (s použitím UUID z databáze)
+    public User(Long id, String name, String surname, String personID, String uuidString) {
         this.id = id;
         this.name = name;
         this.surname = surname;
         this.personID = personID;
-        this.uuid = uuid;
+        this.uuid = UUID.fromString(uuidString);
     }
 
-    public Long getId() {
-        return id;
+    // Konstruktor pro vytváření uživatele s předem známým UUID
+//    public User(Long id, String name, String surname, String personID, UUID uuid) {
+//        this.id = id;
+//        this.name = name;
+//        this.surname = surname;
+//        this.personID = personID;
+//        this.uuid = uuid;
+//    }
+
+    public User(String name, String surname, String personID) {
+        this.name = name;
+        this.surname = surname;
+        this.personID = personID;
+        this.uuid = UUID.randomUUID();
     }
 
     public void setId(Long id) {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public void setPersonID(String personID) {
+        this.personID = personID;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public Long getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public String getSurname() {
         return surname;
     }
 
-    public void setSurname(String surname) {
-        this.surname = surname;
-    }
-
     public String getPersonID() {
         return personID;
-    }
-
-    public void setPersonID(String personID) {
-        this.personID = personID;
     }
 
     public UUID getUuid() {
         return uuid;
     }
 
-    public void setUuid(UUID uuid) {
-        this.uuid = uuid;
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                ", personID='" + personID + '\'' +
+                ", uuid=" + uuid +
+                '}';
     }
 }
