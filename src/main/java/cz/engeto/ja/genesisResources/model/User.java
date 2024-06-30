@@ -11,14 +11,6 @@ public class User {
     private UUID uuid;
 
     public User() {
-        this.uuid = UUID.randomUUID();
-    }
-
-    public User(String name, String surname, String personID) {
-        this.name = name;
-        this.surname = surname;
-        this.personID = personID;
-        this.uuid = UUID.randomUUID();
     }
 
     public User(Long id, String name, String surname, String personID, UUID uuid) {

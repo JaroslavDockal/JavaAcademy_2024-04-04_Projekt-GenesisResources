@@ -21,12 +21,12 @@ public class PersonIdService {
         return personIds;
     }
 
-    private List<String> loadPersonIdsFromFile(String filename) {
+    private List<String> loadPersonIdsFromFile(String fileName) {
         List<String> ids = new ArrayList<>();
-        try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
             String line;
             while ((line = br.readLine()) != null) {
-                ids.add(line.trim());
+                ids.add(line);
             }
         } catch (IOException e) {
             e.printStackTrace();

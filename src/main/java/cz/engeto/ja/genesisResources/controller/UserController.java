@@ -23,53 +23,82 @@ public class UserController {
     private UserService userService;
 
     @PostMapping
-    public User createUser(@RequestBody User user) throws SQLException {
-        userService.createUser(user);
-        return user;
+    public ResponseEntity<?> createUser(@RequestBody User user) {
+        try {
+            userService.createUser(user);
+            return ResponseEntity.status(HttpStatus.CREATED).body(user);
+        } catch (SQLException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
     }
 
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> getUserById(@PathVariable Long id, @RequestParam(value = "detail", required = false, defaultValue = "false") boolean detail) throws SQLException {
-        if (detail) {
-            User user = userService.getUserById(id);
-            if (user == null) {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found with id " + id);
+    public ResponseEntity<?> getUserById(@PathVariable Long id, @RequestParam(value = "detail", required = false, defaultValue = "false") boolean detail) {
+        try {
+            if (detail) {
+                User user = userService.getUserById(id);
+                if (user == null) {
+                    return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found with id " + id);
+                }
+                return ResponseEntity.ok(user);
+            } else {
+                UserBasicInfo userBasicInfo = userService.getUserByIdSimple(id);
+                if (userBasicInfo == null) {
+                    return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found with id " + id);
+                }
+                return ResponseEntity.ok(userBasicInfo);
             }
-            return ResponseEntity.ok(user);
-        } else {
-            UserBasicInfo userBasicInfo = userService.getUserByIdSimple(id);
-            if (userBasicInfo == null) {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found with id " + id);
-            }
-            return ResponseEntity.ok(userBasicInfo);
+        } catch (SQLException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
     }
 
     @GetMapping("/uuid/{uuid}")
-    public User getUserByUuid(@PathVariable UUID uuid) throws SQLException {
-        return userService.getUserByUuid(uuid);
+    public ResponseEntity<?> getUserByUuid(@PathVariable UUID uuid) {
+        try {
+            User user = userService.getUserByUuid(uuid);
+            if (user == null) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found with uuid " + uuid);
+            }
+            return ResponseEntity.ok(user);
+        } catch (SQLException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
     }
 
     @GetMapping
-    public ResponseEntity<?> getAllUsers(@RequestParam(value = "detail", required = false, defaultValue = "false") boolean detail) throws SQLException {
-        if (detail) {
-            List<User> users = userService.getAllUsers();
-            return ResponseEntity.ok(users);
-        } else {
-            List<UserBasicInfo> users = userService.getAllUsersSimple();
-            return ResponseEntity.ok(users);
+    public ResponseEntity<?> getAllUsers(@RequestParam(value = "detail", required = false, defaultValue = "false") boolean detail) {
+        try {
+            if (detail) {
+                List<User> users = userService.getAllUsers();
+                return ResponseEntity.ok(users);
+            } else {
+                List<UserBasicInfo> users = userService.getAllUsersSimple();
+                return ResponseEntity.ok(users);
+            }
+        } catch (SQLException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
     }
 
     @PutMapping("/{uuid}")
-    public User updateUser(@PathVariable UUID uuid, @RequestBody User user) throws SQLException {
-        user.setUuid(uuid);
-        userService.updateUser(user);
-        return user;
+    public ResponseEntity<?> updateUser(@PathVariable UUID uuid, @RequestBody User user) {
+        try {
+            user.setUuid(uuid);
+            userService.updateUser(user);
+            return ResponseEntity.ok(user);
+        } catch (SQLException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
     }
 
     @DeleteMapping("/{uuid}")
-    public void deleteUser(@PathVariable UUID uuid) throws SQLException {
-        userService.deleteUser(uuid);
+    public ResponseEntity<?> deleteUser(@PathVariable UUID uuid) {
+        try {
+            userService.deleteUser(uuid);
+            return ResponseEntity.noContent().build();
+        } catch (SQLException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
     }
 }

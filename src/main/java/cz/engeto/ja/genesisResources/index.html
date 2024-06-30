@@ -3,6 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <title>API Test</title>
+    <style>
+        #output-box {
+            border: 1px solid #000;
+            padding: 10px;
+            width: 400px;
+            height: 400px;
+            overflow-y: scroll;
+        }
+    </style>
     <script>
         async function apiCall(url, method = 'GET', data = null) {
             const options = {
@@ -17,14 +26,18 @@
 
             const response = await fetch(url, options);
             const result = await response.json();
-            console.log(result);
+            const outputBox = document.getElementById('output-box');
+            if (!response.ok) {
+                outputBox.innerHTML = `<div style="color:red;">Error: ${result}</div>`;
+            } else {
+                outputBox.innerHTML = `<pre>${JSON.stringify(result, null, 2)}</pre>`;
+            }
         }
 
         async function createUser() {
             const data = {
                 name: document.getElementById('create-name').value,
                 surname: document.getElementById('create-surname').value,
-                personID: document.getElementById('create-personID').value,
                 uuid: document.getElementById('create-uuid').value,
             };
             await apiCall('http://localhost:8080/api/v1/users', 'POST', data);
@@ -46,7 +59,6 @@
             const data = {
                 name: document.getElementById('update-name').value,
                 surname: document.getElementById('update-surname').value,
-                personID: document.getElementById('update-personID').value
             };
             await apiCall(`http://localhost:8080/api/v1/users/${uuid}`, 'PUT', data);
         }
@@ -64,7 +76,6 @@
     <h2>Create User</h2>
     <input id="create-name" type="text" placeholder="Name" />
     <input id="create-surname" type="text" placeholder="Surname" />
-    <input id="create-personID" type="text" placeholder="PersonID" />
     <input id="create-uuid" type="text" placeholder="UUID" />
     <button onclick="createUser()">Create User</button>
 </section>
@@ -89,7 +100,6 @@
     <input id="update-uuid" type="text" placeholder="UUID" />
     <input id="update-name" type="text" placeholder="Name" />
     <input id="update-surname" type="text" placeholder="Surname" />
-    <input id="update-personID" type="text" placeholder="PersonID" />
     <button onclick="updateUser()">Update User</button>
 </section>
 
@@ -97,6 +107,11 @@
     <h2>Delete User</h2>
     <input id="delete-uuid" type="text" placeholder="UUID" />
     <button onclick="deleteUser()">Delete User</button>
+</section>
+
+<section>
+    <h2>Output</h2>
+    <div id="output-box"></div>
 </section>
 </body>
 </html>
