@@ -48,6 +48,7 @@ public class UserController {
         }
     }
 
+    //TODO: Podle zadání by to měl být string, ale v db je to long...
     @GetMapping(value = "/user/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> getUserById(@PathVariable Long id, @RequestParam(value = "detail", required = false, defaultValue = "false") boolean detail) {
         try {

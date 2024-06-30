@@ -47,7 +47,7 @@ public class UserService {
     }
 
     public User getUserByPersonId(String personID) throws SQLException {
-        System.out.println("Received request for user with personID: " + personID);
+        System.out.println("Received request to create new user with personID: \"" + personID + "\", checking availability...");
         String sql = "SELECT * FROM Users WHERE personID = ?";
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, personID);
