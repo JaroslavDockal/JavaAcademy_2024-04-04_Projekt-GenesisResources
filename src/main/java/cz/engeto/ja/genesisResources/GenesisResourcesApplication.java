@@ -1,6 +1,6 @@
 package cz.engeto.ja.genesisResources;
 
-import cz.engeto.ja.genesisResources.util.Logger;
+import cz.engeto.ja.genesisResources.util.AppLogger;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -24,7 +24,7 @@ public class GenesisResourcesApplication {
 	public static class ApplicationStartingListener implements ApplicationListener<ApplicationStartingEvent> {
 		@Override
 		public void onApplicationEvent(ApplicationStartingEvent event) {
-			Logger.log("Genesis Resources Application starting.");
+			AppLogger.log("Genesis Resources Application starting.");
 		}
 	}
 
@@ -32,7 +32,7 @@ public class GenesisResourcesApplication {
 	public static class ApplicationEventListener implements ApplicationListener<ContextRefreshedEvent> {
 		@Override
 		public void onApplicationEvent(ContextRefreshedEvent event) {
-			Logger.log("Genesis Resources Application started.");
+			AppLogger.log("Genesis Resources Application started.");
 		}
 	}
 
@@ -40,7 +40,7 @@ public class GenesisResourcesApplication {
 	public static class ApplicationShutdownListener implements ApplicationListener<ContextClosedEvent> {
 		@Override
 		public void onApplicationEvent(ContextClosedEvent event) {
-			Logger.log("Genesis Resources Application shutting down.");
+			AppLogger.log("Genesis Resources Application shutting down.");
 		}
 	}
 }

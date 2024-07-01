@@ -3,7 +3,7 @@ package cz.engeto.ja.genesisResources.service;
 import cz.engeto.ja.genesisResources.model.User;
 import cz.engeto.ja.genesisResources.model.UserBasicInfo;
 import cz.engeto.ja.genesisResources.util.Settings;
-import cz.engeto.ja.genesisResources.util.Logger;
+import cz.engeto.ja.genesisResources.util.AppLogger;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,18 +26,18 @@ public class UserService {
     }
 
     private Connection getConnection() throws SQLException {
-        Logger.log("Connecting to database...");
+        AppLogger.log("Connecting to database...");
         return DriverManager.getConnection(CONNECTION_STRING);
     }
 
     public void createUser(User user) throws SQLException {
-        Logger.log("Creating user: " + user);
+        AppLogger.log("Creating user: " + user);
         String sql = "INSERT INTO Users (name, surname, personID, uuid) VALUES (?, ?, ?, ?)";
         try (Connection connection = getConnection();
              PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
             if (personIdService.isPersonIdUsedByOtherUser(user.getPersonID())) {
-                Logger.log("PersonID " + user.getPersonID() + " already assigned to another user");
+                AppLogger.log("PersonID " + user.getPersonID() + " already assigned to another user");
                 throw new SQLException("personID already assigned to another user");
             }
 
@@ -50,16 +50,16 @@ public class UserService {
             ResultSet keys = statement.getGeneratedKeys();
             if (keys.next()) {
                 user.setId(keys.getLong(1));
-                Logger.log("User created with ID: " + user.getId());
+                AppLogger.log("User created with ID: " + user.getId());
             }
         } catch (SQLException e) {
-            Logger.log("Failed to create user: " + e.getMessage());
+            AppLogger.log("Failed to create user: " + e.getMessage());
             throw new SQLException("Failed to create user", e);
         }
     }
 
     public User getUserByPersonId(String personID) throws SQLException {
-        Logger.log("Retrieving user by personID: " + personID);
+        AppLogger.log("Retrieving user by personID: " + personID);
         String sql = "SELECT * FROM Users WHERE personID = ?";
         try (Connection connection = getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
@@ -73,19 +73,19 @@ public class UserService {
                         resultSet.getString("personID"),
                         resultSet.getString("uuid")
                 );
-                Logger.log("User found: " + user);
+                AppLogger.log("User found: " + user);
                 return user;
             }
         } catch (SQLException e) {
-            Logger.log("Failed to retrieve user by personID: " + e.getMessage());
+            AppLogger.log("Failed to retrieve user by personID: " + e.getMessage());
             throw new SQLException("Failed to retrieve user by personID", e);
         }
-        Logger.log("No user found with personID: " + personID);
+        AppLogger.log("No user found with personID: " + personID);
         return null;
     }
 
     public User getUserById(Long id) throws SQLException {
-        Logger.log("Retrieving user by ID: " + id);
+        AppLogger.log("Retrieving user by ID: " + id);
         String sql = "SELECT * FROM Users WHERE id = ?";
         try (Connection connection = getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
@@ -99,14 +99,14 @@ public class UserService {
                         resultSet.getString("personID"),
                         resultSet.getString("uuid")
                 );
-                Logger.log("User found: " + user);
+                AppLogger.log("User found: " + user);
                 return user;
             }
         } catch (SQLException e) {
-            Logger.log("Failed to retrieve user by ID: " + e.getMessage());
+            AppLogger.log("Failed to retrieve user by ID: " + e.getMessage());
             throw new SQLException("Failed to retrieve user by ID", e);
         }
-        Logger.log("No user found with ID: " + id);
+        AppLogger.log("No user found with ID: " + id);
         return null;
     }
 
@@ -115,19 +115,19 @@ public class UserService {
             User user = getUserById(id);
             if (user != null) {
                 UserBasicInfo userBasicInfo = UserBasicInfo.fromUser(user);
-                Logger.log("Basic info of user found: " + userBasicInfo);
+                AppLogger.log("Basic info of user found: " + userBasicInfo);
                 return userBasicInfo;
             }
         } catch (SQLException e) {
-            Logger.log("Failed to retrieve user (basic info) by ID: " + e.getMessage());
+            AppLogger.log("Failed to retrieve user (basic info) by ID: " + e.getMessage());
             throw new SQLException("Failed to retrieve user (basic info) by ID", e);
         }
-        Logger.log("No basic info found for user with ID: " + id);
+        AppLogger.log("No basic info found for user with ID: " + id);
         return null;
     }
 
     public User getUserByUuid(UUID uuid) throws SQLException {
-        Logger.log("Retrieving user by UUID: " + uuid);
+        AppLogger.log("Retrieving user by UUID: " + uuid);
         String sql = "SELECT * FROM Users WHERE uuid = ?";
         try (Connection connection = getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
@@ -141,19 +141,19 @@ public class UserService {
                         resultSet.getString("personID"),
                         resultSet.getString("uuid")
                 );
-                Logger.log("User found: " + user);
+                AppLogger.log("User found: " + user);
                 return user;
             }
         } catch (SQLException e) {
-            Logger.log("Failed to retrieve user by UUID: " + e.getMessage());
+            AppLogger.log("Failed to retrieve user by UUID: " + e.getMessage());
             throw new SQLException("Failed to retrieve user by UUID", e);
         }
-        Logger.log("No user found with UUID: " + uuid);
+        AppLogger.log("No user found with UUID: " + uuid);
         return null;
     }
 
     public List<User> getAllUsers() throws SQLException {
-        Logger.log("Retrieving all users");
+        AppLogger.log("Retrieving all users");
         List<User> allUsers = new ArrayList<>();
         String sql = "SELECT * FROM Users";
         try (Connection connection = getConnection();
@@ -170,15 +170,15 @@ public class UserService {
                 allUsers.add(user);
             }
         } catch (SQLException e) {
-            Logger.log("Failed to retrieve all users: " + e.getMessage());
+            AppLogger.log("Failed to retrieve all users: " + e.getMessage());
             throw new SQLException("Failed to retrieve all users (full info)", e);
         }
-        Logger.log("All users retrieved: " + allUsers);
+        AppLogger.log("All users retrieved: " + allUsers);
         return allUsers;
     }
 
     public List<UserBasicInfo> getAllUsersSimple() throws SQLException {
-        Logger.log("Retrieving all users (basic info)");
+        AppLogger.log("Retrieving all users (basic info)");
         List<UserBasicInfo> allUsers = new ArrayList<>();
         String sql = "SELECT id, name, surname FROM Users";
         try (Connection connection = getConnection();
@@ -193,16 +193,16 @@ public class UserService {
                 allUsers.add(userBasicInfo);
             }
         } catch (SQLException e) {
-            Logger.log("Failed to retrieve all users (basic info): " + e.getMessage());
+            AppLogger.log("Failed to retrieve all users (basic info): " + e.getMessage());
             throw new SQLException("Failed to retrieve all users (basic info)", e);
         }
-        Logger.log("All users (basic info) retrieved: " + allUsers);
+        AppLogger.log("All users (basic info) retrieved: " + allUsers);
         return allUsers;
     }
 
     public void updateUser(User user) throws SQLException {
-        Logger.log("Present user: " + getUserById(user.getId()));
-        Logger.log("Updating user: " + user);
+        AppLogger.log("Present user: " + getUserById(user.getId()));
+        AppLogger.log("Updating user: " + user);
         String sql = "UPDATE Users SET name = ?, surname = ? WHERE id = ?";
         try (Connection connection = getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
@@ -210,23 +210,23 @@ public class UserService {
             statement.setString(2, user.getSurname());
             statement.setLong(3, user.getId());
             statement.executeUpdate();
-            Logger.log("User updated: " + UserBasicInfo.fromUser(user));
+            AppLogger.log("User updated: " + UserBasicInfo.fromUser(user));
         } catch (SQLException e) {
-            Logger.log("Failed to update user: " + e.getMessage());
+            AppLogger.log("Failed to update user: " + e.getMessage());
             throw new SQLException("Failed to update user", e);
         }
     }
 
     public void deleteUser(Long id) throws SQLException {
-        Logger.log("Deleting user with ID: " + id);
+        AppLogger.log("Deleting user with ID: " + id);
         String sql = "DELETE FROM Users WHERE id = ?";
         try (Connection connection = getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setLong(1, id);
             statement.executeUpdate();
-            Logger.log("User deleted with ID: " + id);
+            AppLogger.log("User deleted with ID: " + id);
         } catch (SQLException e) {
-            Logger.log("Failed to delete user: " + e.getMessage());
+            AppLogger.log("Failed to delete user: " + e.getMessage());
             throw new SQLException("Failed to delete user", e);
         }
     }

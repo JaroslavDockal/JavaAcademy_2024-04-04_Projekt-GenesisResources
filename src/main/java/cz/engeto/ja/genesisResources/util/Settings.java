@@ -10,9 +10,4 @@ public class Settings {
     public static final String CONNECTION_STRING = "jdbc:mysql://" + DB_HOST + ":" + DB_PORT + "/" + DB_NAME + "?user=" + DB_USER + "&password=" + DB_PASSWORD;
 
     public static final String PERSON_ID_FILE = "dataPersonId.txt";
-    public static final String LOG_FILE = "application.log";
-
-    public static final boolean LOG_ENABLED = true;
-    public static final boolean CONSOLE_OUTPUT_ENABLED = true;
-    public static final String LOG_TIME_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSS";
 }
