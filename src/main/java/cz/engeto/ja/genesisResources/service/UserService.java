@@ -21,6 +21,10 @@ public class UserService {
     @Autowired
     private PersonIdService personIdService;
 
+    public UserService(PersonIdService personIdService) {
+        this.personIdService = personIdService;
+    }
+
     private Connection getConnection() throws SQLException {
         Logger.log("Connecting to database...");
         return DriverManager.getConnection(CONNECTION_STRING);
@@ -197,6 +201,7 @@ public class UserService {
     }
 
     public void updateUser(User user) throws SQLException {
+        Logger.log("Present user: " + getUserById(user.getId()));
         Logger.log("Updating user: " + user);
         String sql = "UPDATE Users SET name = ?, surname = ? WHERE id = ?";
         try (Connection connection = getConnection();
@@ -205,7 +210,7 @@ public class UserService {
             statement.setString(2, user.getSurname());
             statement.setLong(3, user.getId());
             statement.executeUpdate();
-            Logger.log("User updated: " + user);
+            Logger.log("User updated: " + UserBasicInfo.fromUser(user));
         } catch (SQLException e) {
             Logger.log("Failed to update user: " + e.getMessage());
             throw new SQLException("Failed to update user", e);

@@ -27,6 +27,11 @@ public class UserController {
     @Autowired
     private PersonIdService personIdService;
 
+    public UserController(UserService userService, PersonIdService personIdService) {
+        this.userService = userService;
+        this.personIdService = personIdService;
+    }
+
     @PostMapping("/user")
     public ResponseEntity<?> createUser(@RequestBody User user) {
         Logger.log("Request to create user: " + user);
@@ -39,12 +44,12 @@ public class UserController {
             }
 
             if (!(personID.length() == 12 && personID.matches("[0-9a-zA-Z]+"))) {
-                Logger.log("Invalid personID: " + personID);
+                Logger.log("Invalid personID: " + personID + ", must be 12 characters long and alphanumeric");
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid personID");
             }
 
             if (!personIdService.getPersonIds().contains(personID)) {
-                Logger.log("Invalid personID: " + personID);
+                Logger.log("Invalid personID: " + personID + ", not in the list of available personIDs");
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid personID");
             }
 
@@ -70,7 +75,6 @@ public class UserController {
                     Logger.log("User not found with ID: " + id);
                     return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found with id " + id);
                 }
-                Logger.log("User found: " + user);
                 return ResponseEntity.ok(user);
             } else {
                 UserBasicInfo userBasicInfo = userService.getUserByIdSimple(id);
@@ -78,7 +82,6 @@ public class UserController {
                     Logger.log("User not found with ID: " + id);
                     return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found with id " + id);
                 }
-                Logger.log("User basic info found: " + userBasicInfo);
                 return ResponseEntity.ok(userBasicInfo);
             }
         } catch (SQLException e) {
@@ -110,11 +113,9 @@ public class UserController {
         try {
             if (detail) {
                 List<User> users = userService.getAllUsers();
-                Logger.log("All users retrieved: " + users);
                 return ResponseEntity.ok(users);
             } else {
                 List<UserBasicInfo> users = userService.getAllUsersSimple();
-                Logger.log("All users (basic info) retrieved: " + users);
                 return ResponseEntity.ok(users);
             }
         } catch (SQLException e) {
@@ -125,7 +126,7 @@ public class UserController {
 
     @PutMapping("/user/{id}")
     public ResponseEntity<?> updateUser(@PathVariable Long id, @RequestBody User user) {
-        Logger.log("Request to update user with ID: " + id + ", new data: " + user);
+        Logger.log("Request to update user with ID: " + id + ", new data: " + UserBasicInfo.fromUser(user));
         try {
             user.setId(id);
             userService.updateUser(user);
@@ -149,12 +150,10 @@ public class UserController {
         try {
             User user = userService.getUserById(id);
             if (user == null) {
-                Logger.log("User not found with ID: " + id);
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found with id " + id);
             }
 
             userService.deleteUser(id);
-            Logger.log("User deleted with ID: " + id);
             return ResponseEntity.noContent().build();
         } catch (SQLException e) {
             Logger.log("Internal server error: " + e.getMessage());
