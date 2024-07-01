@@ -27,4 +27,13 @@ public class UserBasicInfo {
     public static UserBasicInfo fromUser(User user) {
         return new UserBasicInfo(user.getId(), user.getName(), user.getSurname());
     }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                '}';
+    }
 }
