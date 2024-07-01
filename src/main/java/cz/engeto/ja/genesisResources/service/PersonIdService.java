@@ -50,12 +50,16 @@ public class PersonIdService {
     }
 
     private void loadPersonIdsFromFile(String fileName) {
+        Logger.log("Start loading person IDs from file: " + fileName);
+        int count = 0;
         try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
             String line;
             while ((line = br.readLine()) != null) {
                 Logger.log("Loaded personID: " + line);
                 personIds.add(line.trim());
+                count++;
             }
+            Logger.log("Successfully loaded " + count + " person IDs from file: " + fileName);
         } catch (IOException e) {
             Logger.log("Failed to load person IDs from file: " + e.getMessage());
             handleFileLoadException(fileName, e);
