@@ -5,6 +5,9 @@ import cz.engeto.ja.genesisResources.model.UserBasicInfo;
 import cz.engeto.ja.genesisResources.service.PersonIdService;
 import cz.engeto.ja.genesisResources.service.UserService;
 import cz.engeto.ja.genesisResources.util.AppLogger;
+import cz.engeto.ja.genesisResources.security.AuthenticationService;
+import cz.engeto.ja.genesisResources.security.Role;
+import cz.engeto.ja.genesisResources.security.UserEntity;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,19 +24,33 @@ import java.util.UUID;
 @CrossOrigin(origins = "http://localhost:63342")
 public class UserController {
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
+    private final PersonIdService personIdService;
 
     @Autowired
-    private PersonIdService personIdService;
-
     public UserController(UserService userService, PersonIdService personIdService) {
         this.userService = userService;
         this.personIdService = personIdService;
     }
 
+    @PostMapping("/auth/login")
+    public ResponseEntity<?> login(@RequestBody UserEntity user) {
+        AppLogger.log("Login request for user: " + user.getUsername());
+        if (AuthenticationService.authenticate(user.getUsername(), user.getPasswordHash())) {
+            return ResponseEntity.ok().build();
+        } else {
+            AppLogger.log("Login failed for user: " + user.getUsername());
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials");
+        }
+    }
+
     @PostMapping("/user")
-    public ResponseEntity<?> createUser(@RequestBody User user) {
+    public ResponseEntity<?> createUser(@RequestBody User user, @RequestHeader("Authorization") String authorizationHeader) {
+        if (!AuthenticationService.hasAdminRole(getLoggedInUsername(authorizationHeader))) {
+            AppLogger.log("Unauthorized user tried to create a user");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized");
+        }
+
         AppLogger.log("Request to create user: " + user);
         try {
             String personID = user.getPersonID();
@@ -125,7 +142,12 @@ public class UserController {
     }
 
     @PutMapping("/user/{id}")
-    public ResponseEntity<?> updateUser(@PathVariable Long id, @RequestBody User user) {
+    public ResponseEntity<?> updateUser(@PathVariable Long id, @RequestBody User user, @RequestHeader("Authorization") String authorizationHeader) {
+        if (!AuthenticationService.hasAdminRole(getLoggedInUsername(authorizationHeader))) {
+            AppLogger.log("Unauthorized user tried to update a user");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized");
+        }
+
         AppLogger.log("Request to update user with ID: " + id + ", new data: " + UserBasicInfo.fromUser(user));
         try {
             user.setId(id);
@@ -145,7 +167,12 @@ public class UserController {
     }
 
     @DeleteMapping("/user/{id}")
-    public ResponseEntity<?> deleteUser(@PathVariable Long id) {
+    public ResponseEntity<?> deleteUser(@PathVariable Long id, @RequestHeader("Authorization") String authorizationHeader) {
+        if (!AuthenticationService.hasAdminRole(getLoggedInUsername(authorizationHeader))) {
+            AppLogger.log("Unauthorized user tried to delete a user");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized");
+        }
+
         AppLogger.log("Request to delete user with ID: " + id);
         try {
             User user = userService.getUserById(id);
@@ -159,5 +186,11 @@ public class UserController {
             AppLogger.log("Internal server error: " + e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
+    }
+
+    private String getLoggedInUsername(String authorizationHeader) {
+        // Simulace získání uživatelského jména z Authorization headeru
+        // Zde je pouze ukázka
+        return authorizationHeader.substring("Bearer ".length()).trim();
     }
 }

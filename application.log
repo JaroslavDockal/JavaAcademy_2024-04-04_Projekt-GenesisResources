@@ -1,0 +1,314 @@
+2024-07-01 12:44:00.108 [SpringApplicationShutdownHook] INFO  c.e.j.g.util.AppLogger - Genesis Resources Application shutting down.
+2024-07-01 12:44:29.073 [main] INFO  c.e.j.g.GenesisResourcesApplication - Starting GenesisResourcesApplication using Java 22.0.1 with PID 2612 (C:\Users\Uzivatel\IdeaProjects\JavaAcademy_2024-04-04_Projekt-GenesisResources\target\classes started by Uzivatel in C:\Users\Uzivatel\IdeaProjects\JavaAcademy_2024-04-04_Projekt-GenesisResources)
+2024-07-01 12:44:29.075 [main] INFO  c.e.j.g.GenesisResourcesApplication - No active profile set, falling back to 1 default profile: "default"
+2024-07-01 12:44:30.329 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2024-07-01 12:44:30.349 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2024-07-01 12:44:30.349 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.20]
+2024-07-01 12:44:30.419 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2024-07-01 12:44:30.420 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1282 ms
+2024-07-01 12:44:30.501 [main] INFO  c.e.j.g.util.AppLogger - Start loading person IDs from file: dataPersonId.txt
+2024-07-01 12:44:30.502 [main] INFO  c.e.j.g.util.AppLogger - Loaded personID: jXa4g3H7oPq2
+2024-07-01 12:44:30.504 [main] INFO  c.e.j.g.util.AppLogger - Loaded personID: yB9fR6tK0wLm
+2024-07-01 12:44:30.504 [main] INFO  c.e.j.g.util.AppLogger - Loaded personID: cN1vZ8pE5sYx
+2024-07-01 12:44:30.504 [main] INFO  c.e.j.g.util.AppLogger - Loaded personID: tQdG2kP3mJfB
+2024-07-01 12:44:30.504 [main] INFO  c.e.j.g.util.AppLogger - Loaded personID: iM5sO6zXcW7v
+2024-07-01 12:44:30.504 [main] INFO  c.e.j.g.util.AppLogger - Loaded personID: rU8nA9eT2bYh
+2024-07-01 12:44:30.504 [main] INFO  c.e.j.g.util.AppLogger - Loaded personID: wV6eH1fK7qZj
+2024-07-01 12:44:30.504 [main] INFO  c.e.j.g.util.AppLogger - Loaded personID: sL4gN9dC3bXz
+2024-07-01 12:44:30.504 [main] INFO  c.e.j.g.util.AppLogger - Loaded personID: kR0aZ7vW2nDl
+2024-07-01 12:44:30.504 [main] INFO  c.e.j.g.util.AppLogger - Loaded personID: eI1oY6tQ9dKj
+2024-07-01 12:44:30.505 [main] INFO  c.e.j.g.util.AppLogger - Loaded personID: gT4cR7wS0lVx
+2024-07-01 12:44:30.505 [main] INFO  c.e.j.g.util.AppLogger - Loaded personID: xF9hD2yJ3sWv
+2024-07-01 12:44:30.505 [main] INFO  c.e.j.g.util.AppLogger - Loaded personID: hM5bZ8nK4aVf
+2024-07-01 12:44:30.505 [main] INFO  c.e.j.g.util.AppLogger - Loaded personID: qE3lY6uT0vKd
+2024-07-01 12:44:30.505 [main] INFO  c.e.j.g.util.AppLogger - Loaded personID: bG2zC7jR9xVp
+2024-07-01 12:44:30.505 [main] INFO  c.e.j.g.util.AppLogger - Loaded personID: vB1fX4rH7iNt
+2024-07-01 12:44:30.505 [main] INFO  c.e.j.g.util.AppLogger - Loaded personID: aO8kP3mZ6dIw
+2024-07-01 12:44:30.506 [main] INFO  c.e.j.g.util.AppLogger - Loaded personID: dW9pL2eU1yNc
+2024-07-01 12:44:30.506 [main] INFO  c.e.j.g.util.AppLogger - Loaded personID: nS7tJ0qR5wGh
+2024-07-01 12:44:30.506 [main] INFO  c.e.j.g.util.AppLogger - Loaded personID: mY6sT1jA3cLz
+2024-07-01 12:44:30.506 [main] INFO  c.e.j.g.util.AppLogger - Successfully loaded 20 valid person IDs from file: dataPersonId.txt
+2024-07-01 12:44:31.017 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path ''
+2024-07-01 12:44:31.025 [main] INFO  c.e.j.g.util.AppLogger - Genesis Resources Application started.
+2024-07-01 12:44:31.029 [main] INFO  c.e.j.g.GenesisResourcesApplication - Started GenesisResourcesApplication in 2.58 seconds (process running for 3.183)
+2024-07-01 12:44:39.003 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-07-01 12:44:39.003 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2024-07-01 12:44:39.005 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 2 ms
+2024-07-01 12:44:39.101 [http-nio-8080-exec-2] INFO  c.e.j.g.util.AppLogger - Request to get all users, detail: false
+2024-07-01 12:44:39.101 [http-nio-8080-exec-2] INFO  c.e.j.g.util.AppLogger - Retrieving all users (basic info)
+2024-07-01 12:44:39.101 [http-nio-8080-exec-2] INFO  c.e.j.g.util.AppLogger - Connecting to database...
+2024-07-01 12:44:39.577 [http-nio-8080-exec-2] INFO  c.e.j.g.util.AppLogger - All users (basic info) retrieved: [User{id=1, name='John', surname='Doe'}, User{id=4, name='Bob', surname='Brown'}, User{id=6, name='Tomáš', surname='Fuk'}]
+2024-07-01 12:44:43.312 [http-nio-8080-exec-4] INFO  c.e.j.g.util.AppLogger - Request to get all users, detail: true
+2024-07-01 12:44:43.312 [http-nio-8080-exec-4] INFO  c.e.j.g.util.AppLogger - Retrieving all users
+2024-07-01 12:44:43.312 [http-nio-8080-exec-4] INFO  c.e.j.g.util.AppLogger - Connecting to database...
+2024-07-01 12:44:43.344 [http-nio-8080-exec-4] INFO  c.e.j.g.util.AppLogger - All users retrieved: [User{id=1, name='John', surname='Doe', personID='123456789012', uuid=550e8400-e29b-41d4-a716-446655440000}, User{id=4, name='Bob', surname='Brown', personID='123456789015', uuid=550e8400-e29b-41d4-a716-446655440003}, User{id=6, name='Tomáš', surname='Fuk', personID='1234567800', uuid=10799cf0-4b7b-4c82-8cb2-2d9d2d16f599}]
+2024-07-01 12:44:49.248 [http-nio-8080-exec-6] INFO  c.e.j.g.util.AppLogger - Request to get user by ID: 1, detail: false
+2024-07-01 12:44:49.248 [http-nio-8080-exec-6] INFO  c.e.j.g.util.AppLogger - Retrieving user by ID: 1
+2024-07-01 12:44:49.249 [http-nio-8080-exec-6] INFO  c.e.j.g.util.AppLogger - Connecting to database...
+2024-07-01 12:44:49.273 [http-nio-8080-exec-6] INFO  c.e.j.g.util.AppLogger - User found: User{id=1, name='John', surname='Doe', personID='123456789012', uuid=550e8400-e29b-41d4-a716-446655440000}
+2024-07-01 12:44:49.274 [http-nio-8080-exec-6] INFO  c.e.j.g.util.AppLogger - Basic info of user found: User{id=1, name='John', surname='Doe'}
+2024-07-01 12:44:51.154 [http-nio-8080-exec-8] INFO  c.e.j.g.util.AppLogger - Request to get user by ID: 1, detail: true
+2024-07-01 12:44:51.154 [http-nio-8080-exec-8] INFO  c.e.j.g.util.AppLogger - Retrieving user by ID: 1
+2024-07-01 12:44:51.154 [http-nio-8080-exec-8] INFO  c.e.j.g.util.AppLogger - Connecting to database...
+2024-07-01 12:44:51.174 [http-nio-8080-exec-8] INFO  c.e.j.g.util.AppLogger - User found: User{id=1, name='John', surname='Doe', personID='123456789012', uuid=550e8400-e29b-41d4-a716-446655440000}
+2024-07-01 12:44:59.075 [http-nio-8080-exec-9] INFO  c.e.j.g.util.AppLogger - Request to get all users, detail: false
+2024-07-01 12:44:59.075 [http-nio-8080-exec-9] INFO  c.e.j.g.util.AppLogger - Retrieving all users (basic info)
+2024-07-01 12:44:59.075 [http-nio-8080-exec-9] INFO  c.e.j.g.util.AppLogger - Connecting to database...
+2024-07-01 12:44:59.095 [http-nio-8080-exec-9] INFO  c.e.j.g.util.AppLogger - All users (basic info) retrieved: [User{id=1, name='John', surname='Doe'}, User{id=4, name='Bob', surname='Brown'}, User{id=6, name='Tomáš', surname='Fuk'}]
+2024-07-01 12:45:22.274 [http-nio-8080-exec-1] WARN  o.s.w.s.m.s.DefaultHandlerExceptionResolver - Resolved [org.springframework.web.bind.MissingRequestHeaderException: Required request header 'Authorization' for method parameter type String is not present]
+2024-07-01 12:45:36.056 [http-nio-8080-exec-3] INFO  c.e.j.g.util.AppLogger - Login request for user: admin
+2024-07-01 12:45:36.057 [http-nio-8080-exec-3] INFO  c.e.j.g.util.AppLogger - Login failed for user: admin
+2024-07-01 12:48:27.019 [SpringApplicationShutdownHook] INFO  c.e.j.g.util.AppLogger - Genesis Resources Application shutting down.
+2024-07-01 12:48:29.947 [main] INFO  c.e.j.g.GenesisResourcesApplication - Starting GenesisResourcesApplication using Java 22.0.1 with PID 4752 (C:\Users\Uzivatel\IdeaProjects\JavaAcademy_2024-04-04_Projekt-GenesisResources\target\classes started by Uzivatel in C:\Users\Uzivatel\IdeaProjects\JavaAcademy_2024-04-04_Projekt-GenesisResources)
+2024-07-01 12:48:29.952 [main] INFO  c.e.j.g.GenesisResourcesApplication - No active profile set, falling back to 1 default profile: "default"
+2024-07-01 12:48:31.258 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2024-07-01 12:48:31.277 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2024-07-01 12:48:31.278 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.20]
+2024-07-01 12:48:31.346 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2024-07-01 12:48:31.348 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1329 ms
+2024-07-01 12:48:31.424 [main] INFO  c.e.j.g.util.AppLogger - Start loading person IDs from file: dataPersonId.txt
+2024-07-01 12:48:31.426 [main] INFO  c.e.j.g.util.AppLogger - Loaded personID: jXa4g3H7oPq2
+2024-07-01 12:48:31.426 [main] INFO  c.e.j.g.util.AppLogger - Loaded personID: yB9fR6tK0wLm
+2024-07-01 12:48:31.426 [main] INFO  c.e.j.g.util.AppLogger - Loaded personID: cN1vZ8pE5sYx
+2024-07-01 12:48:31.426 [main] INFO  c.e.j.g.util.AppLogger - Loaded personID: tQdG2kP3mJfB
+2024-07-01 12:48:31.426 [main] INFO  c.e.j.g.util.AppLogger - Loaded personID: iM5sO6zXcW7v
+2024-07-01 12:48:31.426 [main] INFO  c.e.j.g.util.AppLogger - Loaded personID: rU8nA9eT2bYh
+2024-07-01 12:48:31.426 [main] INFO  c.e.j.g.util.AppLogger - Loaded personID: wV6eH1fK7qZj
+2024-07-01 12:48:31.427 [main] INFO  c.e.j.g.util.AppLogger - Loaded personID: sL4gN9dC3bXz
+2024-07-01 12:48:31.444 [main] INFO  c.e.j.g.util.AppLogger - Loaded personID: kR0aZ7vW2nDl
+2024-07-01 12:48:31.445 [main] INFO  c.e.j.g.util.AppLogger - Loaded personID: eI1oY6tQ9dKj
+2024-07-01 12:48:31.445 [main] INFO  c.e.j.g.util.AppLogger - Loaded personID: gT4cR7wS0lVx
+2024-07-01 12:48:31.445 [main] INFO  c.e.j.g.util.AppLogger - Loaded personID: xF9hD2yJ3sWv
+2024-07-01 12:48:31.445 [main] INFO  c.e.j.g.util.AppLogger - Loaded personID: hM5bZ8nK4aVf
+2024-07-01 12:48:31.445 [main] INFO  c.e.j.g.util.AppLogger - Loaded personID: qE3lY6uT0vKd
+2024-07-01 12:48:31.445 [main] INFO  c.e.j.g.util.AppLogger - Loaded personID: bG2zC7jR9xVp
+2024-07-01 12:48:31.446 [main] INFO  c.e.j.g.util.AppLogger - Loaded personID: vB1fX4rH7iNt
+2024-07-01 12:48:31.446 [main] INFO  c.e.j.g.util.AppLogger - Loaded personID: aO8kP3mZ6dIw
+2024-07-01 12:48:31.446 [main] INFO  c.e.j.g.util.AppLogger - Loaded personID: dW9pL2eU1yNc
+2024-07-01 12:48:31.446 [main] INFO  c.e.j.g.util.AppLogger - Loaded personID: nS7tJ0qR5wGh
+2024-07-01 12:48:31.446 [main] INFO  c.e.j.g.util.AppLogger - Loaded personID: mY6sT1jA3cLz
+2024-07-01 12:48:31.447 [main] INFO  c.e.j.g.util.AppLogger - Successfully loaded 20 valid person IDs from file: dataPersonId.txt
+2024-07-01 12:48:31.952 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path ''
+2024-07-01 12:48:31.959 [main] INFO  c.e.j.g.util.AppLogger - Genesis Resources Application started.
+2024-07-01 12:48:31.964 [main] INFO  c.e.j.g.GenesisResourcesApplication - Started GenesisResourcesApplication in 2.598 seconds (process running for 3.242)
+2024-07-01 12:48:36.439 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-07-01 12:48:36.440 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2024-07-01 12:48:36.441 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 1 ms
+2024-07-01 12:48:36.592 [http-nio-8080-exec-1] INFO  c.e.j.g.util.AppLogger - Login request for user: admin
+2024-07-01 12:48:36.593 [http-nio-8080-exec-1] INFO  c.e.j.g.util.AppLogger - Login failed for user: admin
+2024-07-01 12:48:55.142 [http-nio-8080-exec-2] WARN  o.s.w.s.m.s.DefaultHandlerExceptionResolver - Resolved [org.springframework.web.bind.MissingRequestHeaderException: Required request header 'Authorization' for method parameter type String is not present]
+2024-07-01 12:57:39.547 [SpringApplicationShutdownHook] INFO  c.e.j.g.util.AppLogger - Genesis Resources Application shutting down.
+2024-07-01 12:57:46.774 [main] INFO  c.e.j.g.GenesisResourcesApplication - Starting GenesisResourcesApplication using Java 22.0.1 with PID 11436 (C:\Users\Uzivatel\IdeaProjects\JavaAcademy_2024-04-04_Projekt-GenesisResources\target\classes started by Uzivatel in C:\Users\Uzivatel\IdeaProjects\JavaAcademy_2024-04-04_Projekt-GenesisResources)
+2024-07-01 12:57:46.778 [main] INFO  c.e.j.g.GenesisResourcesApplication - No active profile set, falling back to 1 default profile: "default"
+2024-07-01 12:57:48.156 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2024-07-01 12:57:48.198 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2024-07-01 12:57:48.199 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.20]
+2024-07-01 12:57:48.290 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2024-07-01 12:57:48.293 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1432 ms
+2024-07-01 12:57:48.392 [main] INFO  c.e.j.g.util.AppLogger - Start loading person IDs from file: dataPersonId.txt
+2024-07-01 12:57:48.394 [main] INFO  c.e.j.g.util.AppLogger - Loaded personID: jXa4g3H7oPq2
+2024-07-01 12:57:48.395 [main] INFO  c.e.j.g.util.AppLogger - Loaded personID: yB9fR6tK0wLm
+2024-07-01 12:57:48.396 [main] INFO  c.e.j.g.util.AppLogger - Loaded personID: cN1vZ8pE5sYx
+2024-07-01 12:57:48.396 [main] INFO  c.e.j.g.util.AppLogger - Loaded personID: tQdG2kP3mJfB
+2024-07-01 12:57:48.396 [main] INFO  c.e.j.g.util.AppLogger - Loaded personID: iM5sO6zXcW7v
+2024-07-01 12:57:48.396 [main] INFO  c.e.j.g.util.AppLogger - Loaded personID: rU8nA9eT2bYh
+2024-07-01 12:57:48.396 [main] INFO  c.e.j.g.util.AppLogger - Loaded personID: wV6eH1fK7qZj
+2024-07-01 12:57:48.396 [main] INFO  c.e.j.g.util.AppLogger - Loaded personID: sL4gN9dC3bXz
+2024-07-01 12:57:48.396 [main] INFO  c.e.j.g.util.AppLogger - Loaded personID: kR0aZ7vW2nDl
+2024-07-01 12:57:48.396 [main] INFO  c.e.j.g.util.AppLogger - Loaded personID: eI1oY6tQ9dKj
+2024-07-01 12:57:48.396 [main] INFO  c.e.j.g.util.AppLogger - Loaded personID: gT4cR7wS0lVx
+2024-07-01 12:57:48.397 [main] INFO  c.e.j.g.util.AppLogger - Loaded personID: xF9hD2yJ3sWv
+2024-07-01 12:57:48.397 [main] INFO  c.e.j.g.util.AppLogger - Loaded personID: hM5bZ8nK4aVf
+2024-07-01 12:57:48.397 [main] INFO  c.e.j.g.util.AppLogger - Loaded personID: qE3lY6uT0vKd
+2024-07-01 12:57:48.397 [main] INFO  c.e.j.g.util.AppLogger - Loaded personID: bG2zC7jR9xVp
+2024-07-01 12:57:48.397 [main] INFO  c.e.j.g.util.AppLogger - Loaded personID: vB1fX4rH7iNt
+2024-07-01 12:57:48.397 [main] INFO  c.e.j.g.util.AppLogger - Loaded personID: aO8kP3mZ6dIw
+2024-07-01 12:57:48.397 [main] INFO  c.e.j.g.util.AppLogger - Loaded personID: dW9pL2eU1yNc
+2024-07-01 12:57:48.397 [main] INFO  c.e.j.g.util.AppLogger - Loaded personID: nS7tJ0qR5wGh
+2024-07-01 12:57:48.397 [main] INFO  c.e.j.g.util.AppLogger - Loaded personID: mY6sT1jA3cLz
+2024-07-01 12:57:48.398 [main] INFO  c.e.j.g.util.AppLogger - Successfully loaded 20 valid person IDs from file: dataPersonId.txt
+2024-07-01 12:57:48.904 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path ''
+2024-07-01 12:57:48.914 [main] INFO  c.e.j.g.util.AppLogger - Genesis Resources Application started.
+2024-07-01 12:57:48.916 [main] INFO  c.e.j.g.GenesisResourcesApplication - Started GenesisResourcesApplication in 2.737 seconds (process running for 3.371)
+2024-07-01 13:05:08.799 [SpringApplicationShutdownHook] INFO  c.e.j.g.util.AppLogger - Genesis Resources Application shutting down.
+2024-07-01 13:06:54.160 [main] INFO  c.e.j.g.GenesisResourcesApplication - Starting GenesisResourcesApplication using Java 22.0.1 with PID 10512 (C:\Users\Uzivatel\IdeaProjects\JavaAcademy_2024-04-04_Projekt-GenesisResources\target\classes started by Uzivatel in C:\Users\Uzivatel\IdeaProjects\JavaAcademy_2024-04-04_Projekt-GenesisResources)
+2024-07-01 13:06:54.164 [main] INFO  c.e.j.g.GenesisResourcesApplication - No active profile set, falling back to 1 default profile: "default"
+2024-07-01 13:06:55.577 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2024-07-01 13:06:55.601 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2024-07-01 13:06:55.602 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.20]
+2024-07-01 13:06:55.696 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2024-07-01 13:06:55.698 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1461 ms
+2024-07-01 13:06:55.772 [main] INFO  c.e.j.g.util.AppLogger - Start loading person IDs from file: dataPersonId.txt
+2024-07-01 13:06:55.773 [main] INFO  c.e.j.g.util.AppLogger - Loaded personID: jXa4g3H7oPq2
+2024-07-01 13:06:55.774 [main] INFO  c.e.j.g.util.AppLogger - Loaded personID: yB9fR6tK0wLm
+2024-07-01 13:06:55.774 [main] INFO  c.e.j.g.util.AppLogger - Loaded personID: cN1vZ8pE5sYx
+2024-07-01 13:06:55.774 [main] INFO  c.e.j.g.util.AppLogger - Loaded personID: tQdG2kP3mJfB
+2024-07-01 13:06:55.774 [main] INFO  c.e.j.g.util.AppLogger - Loaded personID: iM5sO6zXcW7v
+2024-07-01 13:06:55.774 [main] INFO  c.e.j.g.util.AppLogger - Loaded personID: rU8nA9eT2bYh
+2024-07-01 13:06:55.774 [main] INFO  c.e.j.g.util.AppLogger - Loaded personID: wV6eH1fK7qZj
+2024-07-01 13:06:55.774 [main] INFO  c.e.j.g.util.AppLogger - Loaded personID: sL4gN9dC3bXz
+2024-07-01 13:06:55.775 [main] INFO  c.e.j.g.util.AppLogger - Loaded personID: kR0aZ7vW2nDl
+2024-07-01 13:06:55.775 [main] INFO  c.e.j.g.util.AppLogger - Loaded personID: eI1oY6tQ9dKj
+2024-07-01 13:06:55.775 [main] INFO  c.e.j.g.util.AppLogger - Loaded personID: gT4cR7wS0lVx
+2024-07-01 13:06:55.775 [main] INFO  c.e.j.g.util.AppLogger - Loaded personID: xF9hD2yJ3sWv
+2024-07-01 13:06:55.775 [main] INFO  c.e.j.g.util.AppLogger - Loaded personID: hM5bZ8nK4aVf
+2024-07-01 13:06:55.775 [main] INFO  c.e.j.g.util.AppLogger - Loaded personID: qE3lY6uT0vKd
+2024-07-01 13:06:55.776 [main] INFO  c.e.j.g.util.AppLogger - Loaded personID: bG2zC7jR9xVp
+2024-07-01 13:06:55.776 [main] INFO  c.e.j.g.util.AppLogger - Loaded personID: vB1fX4rH7iNt
+2024-07-01 13:06:55.776 [main] INFO  c.e.j.g.util.AppLogger - Loaded personID: aO8kP3mZ6dIw
+2024-07-01 13:06:55.776 [main] INFO  c.e.j.g.util.AppLogger - Loaded personID: dW9pL2eU1yNc
+2024-07-01 13:06:55.776 [main] INFO  c.e.j.g.util.AppLogger - Loaded personID: nS7tJ0qR5wGh
+2024-07-01 13:06:55.776 [main] INFO  c.e.j.g.util.AppLogger - Loaded personID: mY6sT1jA3cLz
+2024-07-01 13:06:55.777 [main] INFO  c.e.j.g.util.AppLogger - Successfully loaded 20 valid person IDs from file: dataPersonId.txt
+2024-07-01 13:06:56.251 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path ''
+2024-07-01 13:06:56.258 [main] INFO  c.e.j.g.util.AppLogger - Genesis Resources Application started.
+2024-07-01 13:06:56.261 [main] INFO  c.e.j.g.GenesisResourcesApplication - Started GenesisResourcesApplication in 2.724 seconds (process running for 3.34)
+2024-07-01 13:07:08.411 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-07-01 13:07:08.412 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2024-07-01 13:07:08.414 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 2 ms
+2024-07-01 13:07:08.705 [http-nio-8080-exec-1] INFO  c.e.j.g.util.AppLogger - Login request for user: admin
+2024-07-01 13:07:09.013 [http-nio-8080-exec-1] INFO  c.e.j.g.util.AppLogger - Login failed for user: admin
+2024-07-01 13:11:19.056 [SpringApplicationShutdownHook] INFO  c.e.j.g.util.AppLogger - Genesis Resources Application shutting down.
+2024-07-01 13:11:22.902 [main] INFO  c.e.j.g.GenesisResourcesApplication - Starting GenesisResourcesApplication using Java 22.0.1 with PID 9192 (C:\Users\Uzivatel\IdeaProjects\JavaAcademy_2024-04-04_Projekt-GenesisResources\target\classes started by Uzivatel in C:\Users\Uzivatel\IdeaProjects\JavaAcademy_2024-04-04_Projekt-GenesisResources)
+2024-07-01 13:11:22.906 [main] INFO  c.e.j.g.GenesisResourcesApplication - No active profile set, falling back to 1 default profile: "default"
+2024-07-01 13:11:24.280 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2024-07-01 13:11:24.308 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2024-07-01 13:11:24.309 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.20]
+2024-07-01 13:11:24.395 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2024-07-01 13:11:24.396 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1430 ms
+2024-07-01 13:11:24.491 [main] INFO  c.e.j.g.util.AppLogger - Start loading person IDs from file: dataPersonId.txt
+2024-07-01 13:11:24.497 [main] INFO  c.e.j.g.util.AppLogger - Loaded personID: jXa4g3H7oPq2
+2024-07-01 13:11:24.497 [main] INFO  c.e.j.g.util.AppLogger - Loaded personID: yB9fR6tK0wLm
+2024-07-01 13:11:24.498 [main] INFO  c.e.j.g.util.AppLogger - Loaded personID: cN1vZ8pE5sYx
+2024-07-01 13:11:24.498 [main] INFO  c.e.j.g.util.AppLogger - Loaded personID: tQdG2kP3mJfB
+2024-07-01 13:11:24.498 [main] INFO  c.e.j.g.util.AppLogger - Loaded personID: iM5sO6zXcW7v
+2024-07-01 13:11:24.498 [main] INFO  c.e.j.g.util.AppLogger - Loaded personID: rU8nA9eT2bYh
+2024-07-01 13:11:24.498 [main] INFO  c.e.j.g.util.AppLogger - Loaded personID: wV6eH1fK7qZj
+2024-07-01 13:11:24.498 [main] INFO  c.e.j.g.util.AppLogger - Loaded personID: sL4gN9dC3bXz
+2024-07-01 13:11:24.498 [main] INFO  c.e.j.g.util.AppLogger - Loaded personID: kR0aZ7vW2nDl
+2024-07-01 13:11:24.498 [main] INFO  c.e.j.g.util.AppLogger - Loaded personID: eI1oY6tQ9dKj
+2024-07-01 13:11:24.498 [main] INFO  c.e.j.g.util.AppLogger - Loaded personID: gT4cR7wS0lVx
+2024-07-01 13:11:24.500 [main] INFO  c.e.j.g.util.AppLogger - Loaded personID: xF9hD2yJ3sWv
+2024-07-01 13:11:24.500 [main] INFO  c.e.j.g.util.AppLogger - Loaded personID: hM5bZ8nK4aVf
+2024-07-01 13:11:24.501 [main] INFO  c.e.j.g.util.AppLogger - Loaded personID: qE3lY6uT0vKd
+2024-07-01 13:11:24.501 [main] INFO  c.e.j.g.util.AppLogger - Loaded personID: bG2zC7jR9xVp
+2024-07-01 13:11:24.502 [main] INFO  c.e.j.g.util.AppLogger - Loaded personID: vB1fX4rH7iNt
+2024-07-01 13:11:24.503 [main] INFO  c.e.j.g.util.AppLogger - Loaded personID: aO8kP3mZ6dIw
+2024-07-01 13:11:24.503 [main] INFO  c.e.j.g.util.AppLogger - Loaded personID: dW9pL2eU1yNc
+2024-07-01 13:11:24.505 [main] INFO  c.e.j.g.util.AppLogger - Loaded personID: nS7tJ0qR5wGh
+2024-07-01 13:11:24.505 [main] INFO  c.e.j.g.util.AppLogger - Loaded personID: mY6sT1jA3cLz
+2024-07-01 13:11:24.506 [main] INFO  c.e.j.g.util.AppLogger - Successfully loaded 20 valid person IDs from file: dataPersonId.txt
+2024-07-01 13:11:25.086 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path ''
+2024-07-01 13:11:25.094 [main] INFO  c.e.j.g.util.AppLogger - Genesis Resources Application started.
+2024-07-01 13:11:25.102 [main] INFO  c.e.j.g.GenesisResourcesApplication - Started GenesisResourcesApplication in 2.798 seconds (process running for 3.43)
+2024-07-01 13:11:35.422 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-07-01 13:11:35.423 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2024-07-01 13:11:35.424 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 1 ms
+2024-07-01 13:11:35.603 [http-nio-8080-exec-1] INFO  c.e.j.g.util.AppLogger - Login request for user: admin
+2024-07-01 13:11:35.770 [http-nio-8080-exec-1] ERROR o.a.c.c.C.[.[.[.[dispatcherServlet] - Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed: java.lang.IllegalArgumentException: rawPassword cannot be null] with root cause
+java.lang.IllegalArgumentException: rawPassword cannot be null
+	at org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder.matches(BCryptPasswordEncoder.java:123)
+	at cz.engeto.ja.genesisResources.security.AuthenticationService.authenticate(AuthenticationService.java:23)
+	at cz.engeto.ja.genesisResources.controller.UserController.login(UserController.java:39)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:255)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:188)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:118)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:926)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:831)
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1089)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:979)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1014)
+	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:914)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:590)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:885)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:206)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:150)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:175)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:150)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:175)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:150)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:175)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:150)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:175)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:150)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:482)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:115)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:344)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:391)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:896)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1736)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63)
+	at java.base/java.lang.Thread.run(Thread.java:1570)
+2024-07-01 13:15:40.364 [http-nio-8080-exec-3] INFO  c.e.j.g.util.AppLogger - Login request for user: admin
+2024-07-01 13:15:40.364 [http-nio-8080-exec-3] ERROR o.a.c.c.C.[.[.[.[dispatcherServlet] - Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed: java.lang.IllegalArgumentException: rawPassword cannot be null] with root cause
+java.lang.IllegalArgumentException: rawPassword cannot be null
+	at org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder.matches(BCryptPasswordEncoder.java:123)
+	at cz.engeto.ja.genesisResources.security.AuthenticationService.authenticate(AuthenticationService.java:23)
+	at cz.engeto.ja.genesisResources.controller.UserController.login(UserController.java:39)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:255)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:188)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:118)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:926)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:831)
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1089)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:979)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1014)
+	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:914)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:590)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:885)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:206)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:150)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:175)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:150)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:175)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:150)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:175)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:150)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:175)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:150)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:482)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:115)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:344)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:391)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:896)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1736)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63)
+	at java.base/java.lang.Thread.run(Thread.java:1570)
