@@ -1,9 +1,14 @@
 package cz.engeto.ja.genesisResources.service;
 
+import cz.engeto.ja.genesisResources.util.Settings;
+import cz.engeto.ja.genesisResources.util.Logger;
 import org.springframework.stereotype.Service;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
@@ -16,8 +21,16 @@ public class PersonIdService {
     private ConcurrentMap<String, Boolean> assignedPersonIds;
 
     public PersonIdService() {
-        this.personIds = loadPersonIdsFromFile("dataPersonId.txt");
+        this.personIds = new HashSet<>(); // Initialize with an empty set initially
         this.assignedPersonIds = new ConcurrentHashMap<>();
+        try {
+            loadPersonIdsFromFile(Settings.PERSON_ID_FILE);
+        } catch (RuntimeException e) {
+            // Log the exception or handle it appropriately
+            Logger.log("Failed to initialize PersonIdService: " + e.getMessage());
+            // Propagate the exception further if necessary
+            throw e;
+        }
     }
 
     public Set<String> getPersonIds() {
@@ -28,18 +41,6 @@ public class PersonIdService {
         return new HashSet<>(assignedPersonIds.keySet());
     }
 
-    //TODO: Je tohle ještě potřeba?
-    public String assignPersonId() {
-        for (String id : personIds) {
-            if (assignedPersonIds.putIfAbsent(id, true) == null) {
-                System.out.println("Assigned personID: " + id);
-                return id;
-            }
-        }
-        System.out.println("No available personID found.");
-        return null;
-    }
-
     public boolean isPersonIdUsedByOtherUser(String personID) {
         return assignedPersonIds.containsKey(personID);
     }
@@ -48,17 +49,37 @@ public class PersonIdService {
         assignedPersonIds.put(personID, true);
     }
 
-    private Set<String> loadPersonIdsFromFile(String fileName) {
-        Set<String> ids = new HashSet<>();
+    private void loadPersonIdsFromFile(String fileName) {
         try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
             String line;
             while ((line = br.readLine()) != null) {
-                System.out.println("Loaded personID: " + line);
-                ids.add(line.trim());
+                Logger.log("Loaded personID: " + line);
+                personIds.add(line.trim());
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            Logger.log("Failed to load person IDs from file: " + e.getMessage());
+            handleFileLoadException(fileName, e);
+        } catch (RuntimeException e) {
+            Logger.log("Unexpected runtime exception occurred: " + e.getMessage());
+            throw e;
+        } catch (Exception e) {
+            Logger.log("Unexpected exception occurred: " + e.getMessage());
+            throw new RuntimeException("Failed to load person IDs from file: " + fileName, e);
         }
-        return ids;
+    }
+
+    private void handleFileLoadException(String fileName, IOException e) {
+        // Handle specific exceptions
+        if (Files.notExists(Path.of(fileName))) {
+            Logger.log("File " + fileName + " does not exist. Continuing with an empty list.");
+            // Continue with empty personIds set
+        } else if (!Files.isReadable(Path.of(fileName))) {
+            Logger.log("Cannot read from file " + fileName + ".");
+            throw new RuntimeException("Cannot read from person ID file: " + fileName);
+        } else {
+            // Handle other IO exceptions
+            Logger.log("IO exception occurred: " + e.getMessage());
+            throw new RuntimeException("Failed to load person IDs from file: " + fileName, e);
+        }
     }
 }
