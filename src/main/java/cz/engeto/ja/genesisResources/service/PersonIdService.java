@@ -22,7 +22,7 @@ public class PersonIdService {
     private ConcurrentMap<String, Boolean> assignedPersonIds;
 
     public PersonIdService() {
-        this.personIds = new HashSet<>(); // Initialize with an empty set initially
+        this.personIds = new HashSet<>();
         this.assignedPersonIds = new ConcurrentHashMap<>();
         try {
             loadPersonIdsFromFile();
@@ -50,11 +50,15 @@ public class PersonIdService {
         try (BufferedReader br = new BufferedReader(new FileReader(Settings.PERSON_ID_FILE))) {
             String line;
             while ((line = br.readLine()) != null) {
-                Logger.log("Loaded personID: " + line);
-                personIds.add(line.trim());
-                count++;
+                if (line.trim().matches("[a-zA-Z0-9]{12}")) {
+                    Logger.log("Loaded personID: " + line);
+                    personIds.add(line.trim());
+                    count++;
+                } else {
+                    Logger.log("Skipping invalid personID format: " + line);
+                }
             }
-            Logger.log("Successfully loaded " + count + " person IDs from file: " + Settings.PERSON_ID_FILE);
+            Logger.log("Successfully loaded " + count + " valid person IDs from file: " + Settings.PERSON_ID_FILE);
         } catch (IOException e) {
             Logger.log("Failed to load person IDs from file: " + e.getMessage());
             handleFileLoadException(e);
