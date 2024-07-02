@@ -35,7 +35,7 @@ public class GenesisResourcesApplication {
 	public static class ApplicationStartingListener implements ApplicationListener<ApplicationStartingEvent> {
 		@Override
 		public void onApplicationEvent(ApplicationStartingEvent event) {
-			AppLogger.log("Genesis Resources Application starting.");
+			AppLogger.info("Genesis Resources Application starting.");
 		}
 	}
 
@@ -46,7 +46,7 @@ public class GenesisResourcesApplication {
 	public static class ApplicationEventListener implements ApplicationListener<ContextRefreshedEvent> {
 		@Override
 		public void onApplicationEvent(ContextRefreshedEvent event) {
-			AppLogger.log("Genesis Resources Application started.");
+			AppLogger.info("Genesis Resources Application started.");
 		}
 	}
 
@@ -57,7 +57,7 @@ public class GenesisResourcesApplication {
 	public static class ApplicationShutdownListener implements ApplicationListener<ContextClosedEvent> {
 		@Override
 		public void onApplicationEvent(ContextClosedEvent event) {
-			AppLogger.log("Genesis Resources Application shutting down.");
+			AppLogger.info("Genesis Resources Application shutting down.");
 		}
 	}
 }
