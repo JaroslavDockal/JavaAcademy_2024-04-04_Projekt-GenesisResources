@@ -1,3 +1,5 @@
+// Uživatelské jméno na discordu:   'jaroslav.dockal'
+
 package cz.engeto.ja.genesisResources;
 
 import cz.engeto.ja.genesisResources.util.AppLogger;
