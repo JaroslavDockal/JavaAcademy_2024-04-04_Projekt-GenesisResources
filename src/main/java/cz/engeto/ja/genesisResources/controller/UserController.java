@@ -16,6 +16,9 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * Controller for handling user-related operations.
+ */
 @RestController
 @RequestMapping("api/v1")
 @CrossOrigin(origins = "http://localhost:63342")
@@ -27,11 +30,21 @@ public class UserController {
     @Autowired
     private PersonIdService personIdService;
 
+    /**
+     * Constructor for UserController.
+     * @param userService the UserService instance
+     * @param personIdService the PersonIdService instance
+     */
     public UserController(UserService userService, PersonIdService personIdService) {
         this.userService = userService;
         this.personIdService = personIdService;
     }
 
+    /**
+     * Endpoint to create a new user.
+     * @param user the User object containing user information
+     * @return ResponseEntity with appropriate status and message
+     */
     @PostMapping("/user")
     public ResponseEntity<?> createUser(@RequestBody User user) {
         AppLogger.log("Request to create user: " + user);
@@ -69,6 +82,12 @@ public class UserController {
         }
     }
 
+    /**
+     * Endpoint to retrieve a user by ID.
+     * @param id the ID of the user
+     * @param detail whether to fetch detailed user information
+     * @return ResponseEntity with user information or error message
+     */
     @GetMapping(value = "/user/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> getUserById(@PathVariable String id, @RequestParam(value = "detail", required = false, defaultValue = "false") boolean detail) {
         AppLogger.log("Request to get user by ID: " + id + ", detail: " + detail);
@@ -103,6 +122,11 @@ public class UserController {
         }
     }
 
+    /**
+     * Endpoint to retrieve a user by UUID.
+     * @param uuidStr the UUID string of the user
+     * @return ResponseEntity with user information or error message
+     */
     @GetMapping("/user/uuid/{uuid}")
     public ResponseEntity<?> getUserByUuid(@PathVariable String uuidStr) {
         AppLogger.log("Request to get user by UUID: " + uuidStr);
@@ -128,6 +152,11 @@ public class UserController {
         }
     }
 
+    /**
+     * Endpoint to retrieve all users.
+     * @param detail whether to fetch detailed user information
+     * @return ResponseEntity with list of users or error message
+     */
     @GetMapping("/users")
     public ResponseEntity<?> getAllUsers(@RequestParam(value = "detail", required = false, defaultValue = "false") boolean detail) {
         AppLogger.log("Request to get all users, detail: " + detail);
@@ -145,6 +174,12 @@ public class UserController {
         }
     }
 
+    /**
+     * Endpoint to update a user.
+     * @param id the ID of the user to update
+     * @param user the User object with updated information
+     * @return ResponseEntity with updated user information or error message
+     */
     @PutMapping("/user/{id}")
     public ResponseEntity<?> updateUser(@PathVariable String id, @RequestBody User user) {
         AppLogger.log("Request to update user with ID: " + id + ", new data: " + UserBasicInfo.fromUser(user));
@@ -174,6 +209,11 @@ public class UserController {
         }
     }
 
+    /**
+     * Endpoint to delete a user.
+     * @param id the ID of the user to delete
+     * @return ResponseEntity with appropriate status or error message
+     */
     @DeleteMapping("/user/{id}")
     public ResponseEntity<?> deleteUser(@PathVariable String id) {
         AppLogger.log("Request to delete user with ID: " + id);
@@ -200,6 +240,11 @@ public class UserController {
         }
     }
 
+    /**
+     * Checks if a string is numeric.
+     * @param str the string to check
+     * @return true if the string is numeric, false otherwise
+     */
     private boolean isNumeric(String str) {
         return str != null && str.matches("\\d+");
     }

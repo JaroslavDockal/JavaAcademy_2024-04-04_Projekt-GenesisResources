@@ -15,12 +15,20 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
+/**
+ * Service class for managing person IDs.
+ * This service loads person IDs from a file and provides methods to check and mark them as assigned.
+ */
 @Service
 public class PersonIdService {
 
-    private final Set<String> personIds;
-    private ConcurrentMap<String, Boolean> assignedPersonIds;
+    private final Set<String> personIds; // Set to store loaded person IDs
+    private ConcurrentMap<String, Boolean> assignedPersonIds; // ConcurrentMap to track assigned person IDs
 
+    /**
+     * Constructor initializes the service.
+     * Loads person IDs from file and handles any initialization exceptions.
+     */
     public PersonIdService() {
         this.personIds = new HashSet<>();
         this.assignedPersonIds = new ConcurrentHashMap<>();
@@ -32,18 +40,35 @@ public class PersonIdService {
         }
     }
 
+    /**
+     * Retrieves the set of loaded person IDs.
+     * @return Set of person IDs
+     */
     public Set<String> getPersonIds() {
         return this.personIds;
     }
 
+    /**
+     * Checks if a person ID is already assigned to another user.
+     * @param personID The person ID to check
+     * @return true if the person ID is assigned, false otherwise
+     */
     public boolean isPersonIdUsedByOtherUser(String personID) {
         return assignedPersonIds.containsKey(personID);
     }
 
+    /**
+     * Marks a person ID as assigned.
+     * @param personID The person ID to mark as assigned
+     */
     public void markPersonIdAsAssigned(String personID) {
         assignedPersonIds.put(personID, true);
     }
 
+    /**
+     * Loads person IDs from a file defined in Settings.PERSON_ID_FILE.
+     * Logs loading progress and handles any exceptions that occur during loading.
+     */
     private void loadPersonIdsFromFile() {
         AppLogger.log("Start loading person IDs from file: " + Settings.PERSON_ID_FILE);
         int count = 0;
@@ -71,6 +96,11 @@ public class PersonIdService {
         }
     }
 
+    /**
+     * Handles exceptions that occur during file loading.
+     * Checks file existence, readability, and logs appropriate messages or throws exceptions.
+     * @param e The IOException thrown during file loading
+     */
     private void handleFileLoadException(IOException e) {
         if (Files.notExists(Path.of(Settings.PERSON_ID_FILE))) {
             AppLogger.log("File " + Settings.PERSON_ID_FILE + " does not exist. Continuing with an empty list.");

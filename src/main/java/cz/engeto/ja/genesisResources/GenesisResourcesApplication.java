@@ -11,15 +11,26 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextClosedEvent;
 import org.springframework.context.event.ContextRefreshedEvent;
 
+/**
+ * Main entry point for Genesis Resources Application.
+ */
 @SpringBootApplication
 @ComponentScan(basePackages = {"cz.engeto.ja.genesisResources"})
 public class GenesisResourcesApplication {
+
+	/**
+	 * Main method to start the application.
+	 * @param args command line arguments
+	 */
 	public static void main(String[] args) {
 		SpringApplication app = new SpringApplication(GenesisResourcesApplication.class);
 		app.addListeners(new ApplicationStartingListener());
 		app.run(args);
 	}
 
+	/**
+	 * Listener for application starting event.
+	 */
 	@Component
 	public static class ApplicationStartingListener implements ApplicationListener<ApplicationStartingEvent> {
 		@Override
@@ -28,6 +39,9 @@ public class GenesisResourcesApplication {
 		}
 	}
 
+	/**
+	 * Listener for application refreshed event.
+	 */
 	@Component
 	public static class ApplicationEventListener implements ApplicationListener<ContextRefreshedEvent> {
 		@Override
@@ -36,6 +50,9 @@ public class GenesisResourcesApplication {
 		}
 	}
 
+	/**
+	 * Listener for application shutdown event.
+	 */
 	@Component
 	public static class ApplicationShutdownListener implements ApplicationListener<ContextClosedEvent> {
 		@Override
