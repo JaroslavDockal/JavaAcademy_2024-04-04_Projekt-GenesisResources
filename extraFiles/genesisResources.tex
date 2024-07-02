@@ -1,0 +1,228 @@
+\documentclass[12pt]{article}
+\usepackage{hyperref}
+\usepackage[utf8]{inputenc}
+\usepackage{setspace}
+\usepackage{geometry}
+
+\geometry{a4paper, margin=1in}
+
+\title{Genesis Resources API Documentation}
+\author{Jaroslav Dockal}
+
+\begin{document}
+	\maketitle
+
+	\newpage
+
+	\tableofcontents
+
+	\newpage
+
+	\section{Introduction}
+
+	The Genesis Resources API is a comprehensive platform designed to facilitate the management of user data through a series of well-defined endpoints. This document serves as a detailed guide outlining the functionalities provided by the API, their practical applications, and the structured formats of their responses.
+
+	\subsection{Purpose and Scope}
+
+	In today's digital landscape, effective management of user data is crucial for businesses and organizations across various industries. The Genesis Resources API addresses this need by offering robust endpoints that enable seamless creation, retrieval, updating, and deletion (CRUD) operations on user records.
+
+	\subsection{Key Features}
+
+	At its core, the Genesis Resources API empowers developers and administrators with the following key features:
+
+	\begin{itemize}
+		\item **User Creation**: Provides a straightforward mechanism for creating new user entries in the system.
+		\item **User Retrieval**: Allows fetching detailed information about a specific user by their unique identifier.
+		\item **User Update**: Supports updates to existing user profiles, facilitating changes to names, surnames, and other relevant details.
+		\item **User Deletion**: Enables the removal of user records from the system, ensuring compliance with data management policies.
+		\item **Batch Operations**: Offers capabilities for retrieving multiple user records simultaneously, enhancing operational efficiency.
+	\end{itemize}
+
+	\subsection{Documentation Structure}
+
+	This documentation is structured into sections dedicated to each API endpoint, providing clear instructions on their usage, supported HTTP methods, expected request payloads, and the corresponding response formats. Each section is designed to equip developers with the knowledge needed to seamlessly integrate these endpoints into their applications.
+
+	\newpage
+
+	\section{Endpoints}
+
+	\subsection{Create User}
+
+	\textbf{URL:} \texttt{/api/v1/user} \\
+	\textbf{Method:} POST \\
+	\textbf{Request Body:}
+	\begin{verbatim}
+		{
+			"name": "John",
+			"surname": "Doe",
+			"personID": "1234567890ab"
+		}
+	\end{verbatim}
+	\textbf{Response:}
+	\begin{verbatim}
+		{
+			"id": "1",
+			"name": "John",
+			"surname": "Doe",
+			"personID": "1234567890ab",
+			"uuid": "12345678-abcd-1234-abcd-123456abcdef"
+		}
+	\end{verbatim}
+
+	\newpage
+
+	\subsection{Update User}
+
+	\textbf{URL:} \texttt{/api/v1/user} \\
+	\textbf{Method:} PUT \\
+	\textbf{Request Body:}
+	\begin{verbatim}
+		{
+			"id": "1",
+			"name": "John",
+			"surname": "Smith"
+		}
+	\end{verbatim}
+	\textbf{Response:}
+	\begin{verbatim}
+		{
+			"id": "1",
+			"name": "John",
+			"surname": "Smith"
+		}
+	\end{verbatim}
+
+	\subsection{Get User by ID}
+
+	\textbf{URL:} \texttt{/api/v1/user/\{id\}} \\
+	\textbf{Method:} GET \\
+	\textbf{Response:}
+	\begin{verbatim}
+		{
+			"id": "1",
+			"name": "John",
+			"surname": "Smith"
+		}
+	\end{verbatim}
+
+	\textbf{URL:} \texttt{/api/v1/user/\{id\}?detail=true} \\
+	\textbf{Method:} GET \\
+	\textbf{Response:}
+	\begin{verbatim}
+		{
+			"id": "1",
+			"name": "John",
+			"surname": "Smith",
+			"personID": "1234567890ab",
+			"uuid": "12345678-abcd-1234-abcd-123456abcdef"
+		}
+	\end{verbatim}
+
+	\newpage
+
+	\subsection{Get All Users}
+
+	\textbf{URL:} \texttt{/api/v1/users} \\
+	\textbf{Method:} GET \\
+	\textbf{Response:}
+	\begin{verbatim}
+		[
+		{
+			"id": "1",
+			"name": "John",
+			"surname": "Smith",
+			"personID": "1234567890ab",
+			"uuid": "12345678-abcd-1234-abcd-123456abcdef"
+		},
+		{
+			"id": "2",
+			"name": "Jane",
+			"surname": "Doe",
+			"personID": "1234567890cd",
+			"uuid": "12345678-abcd-1234-abcd-abcdef123456"
+		}
+		]
+	\end{verbatim}
+
+
+	\textbf{URL:} \texttt{/api/v1/users?detail=true} \\
+	\textbf{Method:} GET \\
+	\textbf{Response:}
+	\begin{verbatim}
+		[
+		{
+			"id": "1",
+			"name": "John",
+			"surname": "Smith",
+			"personID": "1234567890ab",
+			"uuid": "12345678-abcd-1234-abcd-123456abcdef"
+		},
+		{
+			"id": "2",
+			"name": "Jane",
+			"surname": "Doe",
+			"personID": "1234567890cd",
+			"uuid": "12345678-abcd-1234-abcd-abcdef123456"
+		}
+		]
+	\end{verbatim}
+
+	\newpage
+
+	\subsection{Delete User}
+
+	\textbf{URL:} \texttt{/api/v1/user/\{id\}} \\
+	\textbf{Method:} DELETE \\
+	\textbf{Response:}
+	\begin{verbatim}
+		User with ID 1 has been successfully deleted.
+	\end{verbatim}
+
+	\newpage
+
+	\section{Configuration}
+
+	The application uses a MySQL database. The connection settings are defined in the \texttt{Settings} class:
+
+	\begin{verbatim}
+		public class Settings {
+			private static final String DB_HOST = "database_host";
+			private static final int DB_PORT = database_port;
+			private static final String DB_NAME = "database_name";
+			private static final String DB_USER = "database_user";
+			private static final String DB_PASSWORD = "database_password";
+
+			...
+
+			public static final String PERSON_ID_FILE = "fileWithPersonIdList";
+		}
+	\end{verbatim}
+
+	\newpage
+
+	\section{API Testing Interface}
+
+	This interface provides a simple environment to test the functionalities of the Genesis Resources API. Users can perform basic operations on the API, such as creating, updating, fetching, and deleting user data.
+
+	\subsection{Interface Description}
+
+	The testing interface is implemented using a web browser and utilizes JavaScript to communicate with the API server. It offers the following functions:
+
+	\begin{itemize}
+		\item **Create User**: Allows the creation of a new user using a POST request.
+		\item **Update User**: Enables updating an existing user using a PUT request.
+		\item **Get User by ID**: Retrieves details of a specific user by ID, optionally with detailed information.
+		\item **Get All Users**: Retrieves a list of all users using a GET request, optionally with detailed information.
+		\item **Delete User**: Deletes a user by ID using a DELETE request.
+	\end{itemize}
+
+	\subsection{Implementation}
+
+	The interface is implemented in HTML and JavaScript. Each function is defined as a corresponding JavaScript function that communicates with the API using the Fetch API. Operation results are displayed in the output box on the page. In case of an error, an error message is displayed.
+
+	\subsection{Usage}
+
+	To use the testing interface, ensure that the API server is running at `http://localhost:8080`. Once the interface is loaded, you can perform each operation by clicking the respective button and filling out the input fields.
+
+
+\end{document}
