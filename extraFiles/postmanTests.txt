@@ -1,0 +1,25 @@
+curl --location 'http://127.0.0.1:8080/api/v1/user' \
+--header 'Content-Type: application/json' \
+--data '{
+    "name": "Pepa",
+    "surname": "Novák",
+    "personID": "jXa4g3H7oPq2"
+}'
+
+curl --location 'http://127.0.0.1:8080/api/v1/user/1'
+
+curl --location 'http://127.0.0.1:8080/api/v1/user/1'?detail=true'
+
+curl --location 'http://127.0.0.1:8080/api/v1/users'
+
+curl --location 'http://127.0.0.1:8080/api/v1/users?detail=true'
+
+curl --location --request PUT 'http://127.0.0.1:8080/api/v1/user' \
+--header 'Content-Type: application/json' \
+--data '{
+    "id": "6",
+    "name": "Josef",
+    "surname": "Novák"
+}'
+
+curl --location --request DELETE 'http://127.0.0.1:8080/api/v1/user/6'
