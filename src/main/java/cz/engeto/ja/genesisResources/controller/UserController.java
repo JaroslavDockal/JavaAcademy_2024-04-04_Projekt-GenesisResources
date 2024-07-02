@@ -2,6 +2,8 @@ package cz.engeto.ja.genesisResources.controller;
 
 import cz.engeto.ja.genesisResources.model.User;
 import cz.engeto.ja.genesisResources.model.UserBasicInfo;
+import cz.engeto.ja.genesisResources.model.UserCreateData;
+import cz.engeto.ja.genesisResources.model.UserUpdateData;
 import cz.engeto.ja.genesisResources.service.PersonIdService;
 import cz.engeto.ja.genesisResources.service.UserService;
 import cz.engeto.ja.genesisResources.util.AppLogger;
@@ -42,42 +44,45 @@ public class UserController {
 
     /**
      * Endpoint to create a new user.
-     * @param user the User object containing user information
+     * @param userData Object containing user's name, surname, and personID
      * @return ResponseEntity with appropriate status and message
      */
     @PostMapping("/user")
-    public ResponseEntity<?> createUser(@RequestBody User user) {
-        AppLogger.log("Request to create user: " + user);
-        if (user == null || user.getPersonID() == null || user.getPersonID().isEmpty()) {
-            AppLogger.log("Invalid input: User or personID is empty");
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid input: User or personID is empty");
+    public ResponseEntity<?> createUser(@RequestBody UserCreateData userData) {
+        AppLogger.info("Request to create user with data: " + userData);
+
+        String name = userData.getName();
+        String surname = userData.getSurname();
+        String personID = userData.getPersonID();
+
+        if (name == null || surname == null || personID == null || personID.isEmpty()) {
+            AppLogger.warn("Invalid input: Name, surname, or personID is empty");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid input: Name, surname, or personID is empty");
         }
+
         try {
-            String personID = user.getPersonID();
-
-            if (userService.getUserByPersonId(personID) != null) {
-                AppLogger.log("Conflict: personID " + personID + " already assigned to another user");
-                return ResponseEntity.status(HttpStatus.CONFLICT).body("personID already assigned to another user");
-            }
-
             if (!(personID.length() == 12 && personID.matches("[0-9a-zA-Z]+"))) {
-                AppLogger.log("Invalid personID: " + personID + ", must be 12 characters long and alphanumeric");
+                AppLogger.warn("Invalid personID: " + personID + ", must be 12 characters long and alphanumeric");
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid personID");
             }
 
             if (!personIdService.getPersonIds().contains(personID)) {
-                AppLogger.log("Invalid personID: " + personID + ", not in the list of available personIDs");
+                AppLogger.warn("Invalid personID: " + personID + ", not in the list of available personIDs");
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid personID");
             }
 
+            User user = new User();
+            user.setName(name);
+            user.setSurname(surname);
             user.setPersonID(personID);
+
             userService.createUser(user);
             personIdService.markPersonIdAsAssigned(personID);
 
-            AppLogger.log("User created: " + user);
+            AppLogger.info("User created: " + user);
             return ResponseEntity.status(HttpStatus.CREATED).body(user);
         } catch (SQLException e) {
-            AppLogger.log("Internal server error: " + e.getMessage());
+            AppLogger.error("Internal server error: " + e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
@@ -90,13 +95,13 @@ public class UserController {
      */
     @GetMapping(value = "/user/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> getUserById(@PathVariable String id, @RequestParam(value = "detail", required = false, defaultValue = "false") boolean detail) {
-        AppLogger.log("Request to get user by ID: " + id + ", detail: " + detail);
+        AppLogger.info("Request to get user by ID: " + id + ", detail: " + detail);
         if (id == null || id.isEmpty()) {
-            AppLogger.log("Invalid input: ID is empty");
+            AppLogger.warn("Invalid input: ID is empty");
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid input: ID is empty");
         }
         if (!isNumeric(id)) {
-            AppLogger.log("Invalid ID format: " + id);
+            AppLogger.warn("Invalid ID format: " + id);
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid ID format");
         }
         try {
@@ -104,20 +109,20 @@ public class UserController {
             if (detail) {
                 User user = userService.getUserById(userId);
                 if (user == null) {
-                    AppLogger.log("User not found with ID: " + id);
+                    AppLogger.warn("User not found with ID: " + id);
                     return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found with id " + id);
                 }
                 return ResponseEntity.ok(user);
             } else {
                 UserBasicInfo userBasicInfo = userService.getUserByIdSimple(userId);
                 if (userBasicInfo == null) {
-                    AppLogger.log("User not found with ID: " + id);
+                    AppLogger.warn("User not found with ID: " + id);
                     return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found with id " + id);
                 }
                 return ResponseEntity.ok(userBasicInfo);
             }
         } catch (SQLException e) {
-            AppLogger.log("Internal server error: " + e.getMessage());
+            AppLogger.error("Internal server error: " + e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
     }
@@ -129,25 +134,25 @@ public class UserController {
      */
     @GetMapping("/user/uuid/{uuid}")
     public ResponseEntity<?> getUserByUuid(@PathVariable String uuidStr) {
-        AppLogger.log("Request to get user by UUID: " + uuidStr);
+        AppLogger.info("Request to get user by UUID: " + uuidStr);
         if (uuidStr == null || uuidStr.isEmpty()) {
-            AppLogger.log("Invalid input: UUID is empty");
+            AppLogger.warn("Invalid input: UUID is empty");
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid input: UUID is empty");
         }
         try {
             UUID uuid = UUID.fromString(uuidStr);
             User user = userService.getUserByUuid(uuid);
             if (user == null) {
-                AppLogger.log("User not found with UUID: " + uuid);
+                AppLogger.warn("User not found with UUID: " + uuid);
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found with uuid " + uuid);
             }
-            AppLogger.log("User found: " + user);
+            AppLogger.info("User found: " + user);
             return ResponseEntity.ok(user);
         } catch (IllegalArgumentException e) {
-            AppLogger.log("Invalid UUID format: " + uuidStr);
+            AppLogger.warn("Invalid UUID format: " + uuidStr);
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid UUID format");
         } catch (SQLException e) {
-            AppLogger.log("Internal server error: " + e.getMessage());
+            AppLogger.error("Internal server error: " + e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
     }
@@ -159,7 +164,7 @@ public class UserController {
      */
     @GetMapping("/users")
     public ResponseEntity<?> getAllUsers(@RequestParam(value = "detail", required = false, defaultValue = "false") boolean detail) {
-        AppLogger.log("Request to get all users, detail: " + detail);
+        AppLogger.info("Request to get all users, detail: " + detail);
         try {
             if (detail) {
                 List<User> users = userService.getAllUsers();
@@ -169,42 +174,52 @@ public class UserController {
                 return ResponseEntity.ok(users);
             }
         } catch (SQLException e) {
-            AppLogger.log("Internal server error: " + e.getMessage());
+            AppLogger.error("Internal server error: " + e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
     }
 
     /**
      * Endpoint to update a user.
-     * @param id the ID of the user to update
-     * @param user the User object with updated information
+     * @param userData the object containing ID, name, and surname of the user to update
      * @return ResponseEntity with updated user information or error message
      */
-    @PutMapping("/user/{id}")
-    public ResponseEntity<?> updateUser(@PathVariable String id, @RequestBody User user) {
-        AppLogger.log("Request to update user with ID: " + id + ", new data: " + UserBasicInfo.fromUser(user));
-        if (id == null || id.isEmpty() || user == null) {
-            AppLogger.log("Invalid input: ID or user data is empty");
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid input: ID or user data is empty");
+    @PutMapping("/user")
+    public ResponseEntity<?> updateUser(@RequestBody UserUpdateData userData) {
+        String id = userData.getId();
+        String name = userData.getName();
+        String surname = userData.getSurname();
+
+        AppLogger.info("Request to update user with ID: " + id + ", new name: " + name + ", new surname: " + surname);
+
+        if (id == null || id.isEmpty() || name == null || name.isEmpty() || surname == null || surname.isEmpty()) {
+            AppLogger.warn("Invalid input: ID, name, or surname is empty");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid input: ID, name, or surname is empty");
         }
         if (!isNumeric(id)) {
-            AppLogger.log("Invalid ID format: " + id);
+            AppLogger.warn("Invalid ID format: " + id);
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid ID format");
         }
         try {
             Long userId = Long.parseLong(id);
-            user.setId(userId);
-            userService.updateUser(user);
 
-            UserBasicInfo userBasicInfo = userService.getUserByIdSimple(userId);
-            if (userBasicInfo == null) {
-                AppLogger.log("User not found with ID: " + id);
+            User userToUpdate = userService.getUserById(userId);
+            if (userToUpdate == null) {
+                AppLogger.warn("User not found with ID: " + id);
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found with id " + id);
             }
-            AppLogger.log("User updated: " + userBasicInfo);
+
+            userToUpdate.setName(name);
+            userToUpdate.setSurname(surname);
+
+            userService.updateUser(userToUpdate);
+
+            UserBasicInfo userBasicInfo = userService.getUserByIdSimple(userId);
+            AppLogger.info("User updated: " + userBasicInfo);
             return ResponseEntity.ok(userBasicInfo);
+
         } catch (SQLException e) {
-            AppLogger.log("Internal server error: " + e.getMessage());
+            AppLogger.error("Internal server error: " + e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
     }
@@ -216,13 +231,13 @@ public class UserController {
      */
     @DeleteMapping("/user/{id}")
     public ResponseEntity<?> deleteUser(@PathVariable String id) {
-        AppLogger.log("Request to delete user with ID: " + id);
+        AppLogger.info("Request to delete user with ID: " + id);
         if (id == null || id.isEmpty()) {
-            AppLogger.log("Invalid input: ID is empty");
+            AppLogger.warn("Invalid input: ID is empty");
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid input: ID is empty");
         }
         if (!isNumeric(id)) {
-            AppLogger.log("Invalid ID format: " + id);
+            AppLogger.warn("Invalid ID format: " + id);
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid ID format");
         }
         try {
@@ -235,7 +250,7 @@ public class UserController {
             userService.deleteUser(userId);
             return ResponseEntity.noContent().build();
         } catch (SQLException e) {
-            AppLogger.log("Internal server error: " + e.getMessage());
+            AppLogger.error("Internal server error: " + e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
     }
