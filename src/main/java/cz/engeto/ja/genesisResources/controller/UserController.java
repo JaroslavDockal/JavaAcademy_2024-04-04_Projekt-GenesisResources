@@ -248,7 +248,8 @@ public class UserController {
             }
 
             userService.deleteUser(userId);
-            return ResponseEntity.noContent().build();
+            AppLogger.info("User with ID " + id + " successfully deleted.");
+            return ResponseEntity.ok("User with ID " + id + " has been successfully deleted.");
         } catch (SQLException e) {
             AppLogger.error("Internal server error: " + e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
