@@ -35,7 +35,7 @@ public class PersonIdService {
         try {
             loadPersonIdsFromFile();
         } catch (RuntimeException e) {
-            AppLogger.log("Failed to initialize PersonIdService: " + e.getMessage());
+            AppLogger.warn("Failed to initialize PersonIdService: " + e.getMessage());
             throw e;
         }
     }
@@ -70,28 +70,28 @@ public class PersonIdService {
      * Logs loading progress and handles any exceptions that occur during loading.
      */
     private void loadPersonIdsFromFile() {
-        AppLogger.log("Start loading person IDs from file: " + Settings.PERSON_ID_FILE);
+        AppLogger.info("Start loading person IDs from file: " + Settings.PERSON_ID_FILE);
         int count = 0;
         try (BufferedReader br = new BufferedReader(new FileReader(Settings.PERSON_ID_FILE))) {
             String line;
             while ((line = br.readLine()) != null) {
                 if (line.trim().matches("[a-zA-Z0-9]{12}")) {
-                    AppLogger.log("Loaded personID: " + line);
+                    AppLogger.info("Loaded personID: " + line);
                     personIds.add(line.trim());
                     count++;
                 } else {
-                    AppLogger.log("Skipping invalid personID format: " + line);
+                    AppLogger.warn("Skipping invalid personID format: " + line);
                 }
             }
-            AppLogger.log("Successfully loaded " + count + " valid person IDs from file: " + Settings.PERSON_ID_FILE);
+            AppLogger.info("Successfully loaded " + count + " valid person IDs from file: " + Settings.PERSON_ID_FILE);
         } catch (IOException e) {
-            AppLogger.log("Failed to load person IDs from file: " + e.getMessage());
+            AppLogger.warn("Failed to load person IDs from file: " + e.getMessage());
             handleFileLoadException(e);
         } catch (RuntimeException e) {
-            AppLogger.log("Unexpected runtime exception occurred: " + e.getMessage());
+            AppLogger.error("Unexpected runtime exception occurred: " + e.getMessage());
             throw e;
         } catch (Exception e) {
-            AppLogger.log("Unexpected exception occurred: " + e.getMessage());
+            AppLogger.error("Unexpected exception occurred: " + e.getMessage());
             throw new RuntimeException("Failed to load person IDs from file: " + Settings.PERSON_ID_FILE, e);
         }
     }
@@ -103,12 +103,12 @@ public class PersonIdService {
      */
     private void handleFileLoadException(IOException e) {
         if (Files.notExists(Path.of(Settings.PERSON_ID_FILE))) {
-            AppLogger.log("File " + Settings.PERSON_ID_FILE + " does not exist. Continuing with an empty list.");
+            AppLogger.warn("File " + Settings.PERSON_ID_FILE + " does not exist. Continuing with an empty list.");
         } else if (!Files.isReadable(Path.of(Settings.PERSON_ID_FILE))) {
-            AppLogger.log("Cannot read from file " + Settings.PERSON_ID_FILE + ".");
+            AppLogger.warn("Cannot read from file " + Settings.PERSON_ID_FILE + ".");
             throw new RuntimeException("Cannot read from person ID file: " + Settings.PERSON_ID_FILE);
         } else {
-            AppLogger.log("IO exception occurred: " + e.getMessage());
+            AppLogger.warn("IO exception occurred: " + e.getMessage());
             throw new RuntimeException("Failed to load person IDs from file: " + Settings.PERSON_ID_FILE, e);
         }
     }
