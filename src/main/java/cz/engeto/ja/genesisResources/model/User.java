@@ -60,6 +60,22 @@ public class User {
     }
 
     /**
+     * Sets the name of the user.
+     * @param name The name of the user
+     */
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    /**
+     * Sets the surname of the user.
+     * @param surname The surname of the user
+     */
+    public void setSurname(String surname) {
+        this.surname = surname;
+    }
+
+    /**
      * Sets the personal identifier of the user.
      * @param personID The personal identifier of the user
      */
