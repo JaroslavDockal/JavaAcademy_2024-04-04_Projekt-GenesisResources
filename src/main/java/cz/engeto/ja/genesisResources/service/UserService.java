@@ -39,7 +39,7 @@ public class UserService {
      * @throws SQLException If a database access error occurs
      */
     private Connection getConnection() throws SQLException {
-        AppLogger.log("Connecting to database...");
+        AppLogger.info("Connecting to database...");
         return DriverManager.getConnection(CONNECTION_STRING);
     }
 
@@ -49,14 +49,14 @@ public class UserService {
      * @throws SQLException If a database access error occurs or the personID is already assigned to another user
      */
     public void createUser(User user) throws SQLException {
-        AppLogger.log("Creating user: " + user);
+        AppLogger.info("Creating user: " + user);
         String sql = "INSERT INTO Users (name, surname, personID, uuid) VALUES (?, ?, ?, ?)";
         try (Connection connection = getConnection();
              PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
             // Check if personID is already assigned to another user
             if (personIdService.isPersonIdUsedByOtherUser(user.getPersonID())) {
-                AppLogger.log("PersonID " + user.getPersonID() + " already assigned to another user");
+                AppLogger.warn("PersonID " + user.getPersonID() + " already assigned to another user");
                 throw new SQLException("personID already assigned to another user");
             }
 
@@ -70,10 +70,10 @@ public class UserService {
             ResultSet keys = statement.getGeneratedKeys();
             if (keys.next()) {
                 user.setId(keys.getLong(1));
-                AppLogger.log("User created with ID: " + user.getId());
+                AppLogger.info("User created with ID: " + user.getId());
             }
         } catch (SQLException e) {
-            AppLogger.log("Failed to create user: " + e.getMessage());
+            AppLogger.warn("Failed to create user: " + e.getMessage());
             throw new SQLException("Failed to create user", e);
         }
     }
@@ -85,7 +85,7 @@ public class UserService {
      * @throws SQLException If a database access error occurs
      */
     public User getUserByPersonId(String personID) throws SQLException {
-        AppLogger.log("Retrieving user by personID: " + personID);
+        AppLogger.info("Retrieving user by personID: " + personID);
         String sql = "SELECT * FROM Users WHERE personID = ?";
         try (Connection connection = getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
@@ -99,14 +99,14 @@ public class UserService {
                         resultSet.getString("personID"),
                         resultSet.getString("uuid")
                 );
-                AppLogger.log("User found: " + user);
+                AppLogger.info("User found: " + user);
                 return user;
             }
         } catch (SQLException e) {
-            AppLogger.log("Failed to retrieve user by personID: " + e.getMessage());
+            AppLogger.warn("Failed to retrieve user by personID: " + e.getMessage());
             throw new SQLException("Failed to retrieve user by personID", e);
         }
-        AppLogger.log("No user found with personID: " + personID);
+        AppLogger.info("No user found with personID: " + personID);
         return null;
     }
 
@@ -117,7 +117,7 @@ public class UserService {
      * @throws SQLException If a database access error occurs
      */
     public User getUserById(Long id) throws SQLException {
-        AppLogger.log("Retrieving user by ID: " + id);
+        AppLogger.info("Retrieving user by ID: " + id);
         String sql = "SELECT * FROM Users WHERE id = ?";
         try (Connection connection = getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
@@ -131,14 +131,14 @@ public class UserService {
                         resultSet.getString("personID"),
                         resultSet.getString("uuid")
                 );
-                AppLogger.log("User found: " + user);
+                AppLogger.info("User found: " + user);
                 return user;
             }
         } catch (SQLException e) {
-            AppLogger.log("Failed to retrieve user by ID: " + e.getMessage());
+            AppLogger.warn("Failed to retrieve user by ID: " + e.getMessage());
             throw new SQLException("Failed to retrieve user by ID", e);
         }
-        AppLogger.log("No user found with ID: " + id);
+        AppLogger.info("No user found with ID: " + id);
         return null;
     }
 
@@ -153,14 +153,14 @@ public class UserService {
             User user = getUserById(id);
             if (user != null) {
                 UserBasicInfo userBasicInfo = UserBasicInfo.fromUser(user);
-                AppLogger.log("Basic info of user found: " + userBasicInfo);
+                AppLogger.info("Basic info of user found: " + userBasicInfo);
                 return userBasicInfo;
             }
         } catch (SQLException e) {
-            AppLogger.log("Failed to retrieve user (basic info) by ID: " + e.getMessage());
+            AppLogger.warn("Failed to retrieve user (basic info) by ID: " + e.getMessage());
             throw new SQLException("Failed to retrieve user (basic info) by ID", e);
         }
-        AppLogger.log("No basic info found for user with ID: " + id);
+        AppLogger.info("No basic info found for user with ID: " + id);
         return null;
     }
 
@@ -171,7 +171,7 @@ public class UserService {
      * @throws SQLException If a database access error occurs
      */
     public User getUserByUuid(UUID uuid) throws SQLException {
-        AppLogger.log("Retrieving user by UUID: " + uuid);
+        AppLogger.info("Retrieving user by UUID: " + uuid);
         String sql = "SELECT * FROM Users WHERE uuid = ?";
         try (Connection connection = getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
@@ -185,14 +185,14 @@ public class UserService {
                         resultSet.getString("personID"),
                         resultSet.getString("uuid")
                 );
-                AppLogger.log("User found: " + user);
+                AppLogger.info("User found: " + user);
                 return user;
             }
         } catch (SQLException e) {
-            AppLogger.log("Failed to retrieve user by UUID: " + e.getMessage());
+            AppLogger.warn("Failed to retrieve user by UUID: " + e.getMessage());
             throw new SQLException("Failed to retrieve user by UUID", e);
         }
-        AppLogger.log("No user found with UUID: " + uuid);
+        AppLogger.info("No user found with UUID: " + uuid);
         return null;
     }
 
@@ -202,7 +202,7 @@ public class UserService {
      * @throws SQLException If a database access error occurs
      */
     public List<User> getAllUsers() throws SQLException {
-        AppLogger.log("Retrieving all users");
+        AppLogger.info("Retrieving all users");
         List<User> allUsers = new ArrayList<>();
         String sql = "SELECT * FROM Users";
         try (Connection connection = getConnection();
@@ -219,10 +219,10 @@ public class UserService {
                 allUsers.add(user);
             }
         } catch (SQLException e) {
-            AppLogger.log("Failed to retrieve all users: " + e.getMessage());
+            AppLogger.warn("Failed to retrieve all users: " + e.getMessage());
             throw new SQLException("Failed to retrieve all users (full info)", e);
         }
-        AppLogger.log("All users retrieved: " + allUsers);
+        AppLogger.info("All users retrieved: " + allUsers);
         return allUsers;
     }
 
@@ -232,7 +232,7 @@ public class UserService {
      * @throws SQLException If a database access error occurs
      */
     public List<UserBasicInfo> getAllUsersSimple() throws SQLException {
-        AppLogger.log("Retrieving all users (basic info)");
+        AppLogger.info("Retrieving all users (basic info)");
         List<UserBasicInfo> allUsers = new ArrayList<>();
         String sql = "SELECT id, name, surname FROM Users";
         try (Connection connection = getConnection();
@@ -247,10 +247,10 @@ public class UserService {
                 allUsers.add(userBasicInfo);
             }
         } catch (SQLException e) {
-            AppLogger.log("Failed to retrieve all users (basic info): " + e.getMessage());
+            AppLogger.warn("Failed to retrieve all users (basic info): " + e.getMessage());
             throw new SQLException("Failed to retrieve all users (basic info)", e);
         }
-        AppLogger.log("All users (basic info) retrieved: " + allUsers);
+        AppLogger.info("All users (basic info) retrieved: " + allUsers);
         return allUsers;
     }
 
@@ -260,8 +260,8 @@ public class UserService {
      * @throws SQLException If a database access error occurs
      */
     public void updateUser(User user) throws SQLException {
-        AppLogger.log("Present user: " + getUserById(user.getId()));
-        AppLogger.log("Updating user: " + user);
+        AppLogger.info("Present user: " + getUserById(user.getId()));
+        AppLogger.info("Updating user: " + user);
         String sql = "UPDATE Users SET name = ?, surname = ? WHERE id = ?";
         try (Connection connection = getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
@@ -269,9 +269,9 @@ public class UserService {
             statement.setString(2, user.getSurname());
             statement.setLong(3, user.getId());
             statement.executeUpdate();
-            AppLogger.log("User updated: " + UserBasicInfo.fromUser(user));
+            AppLogger.info("User updated: " + UserBasicInfo.fromUser(user));
         } catch (SQLException e) {
-            AppLogger.log("Failed to update user: " + e.getMessage());
+            AppLogger.warn("Failed to update user: " + e.getMessage());
             throw new SQLException("Failed to update user", e);
         }
     }
@@ -282,15 +282,15 @@ public class UserService {
      * @throws SQLException If a database access error occurs
      */
     public void deleteUser(Long id) throws SQLException {
-        AppLogger.log("Deleting user with ID: " + id);
+        AppLogger.info("Deleting user with ID: " + id);
         String sql = "DELETE FROM Users WHERE id = ?";
         try (Connection connection = getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setLong(1, id);
             statement.executeUpdate();
-            AppLogger.log("User deleted with ID: " + id);
+            AppLogger.info("User deleted with ID: " + id);
         } catch (SQLException e) {
-            AppLogger.log("Failed to delete user: " + e.getMessage());
+            AppLogger.warn("Failed to delete user: " + e.getMessage());
             throw new SQLException("Failed to delete user", e);
         }
     }
